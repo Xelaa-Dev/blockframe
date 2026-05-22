@@ -35,7 +35,7 @@ public class DoubleJumpRegistrar {
             if (client.player == null || client.level == null) return;
             /*
             Check every tick where we are, if we weren't on ground
-            and now we are, we need to await before applying any double jump logic
+            and now we are, we need to wait before applying any double jump logic
             */
             boolean isOnGround = client.player.onGround();
             boolean justLanded = !wasOnGround && isOnGround;
