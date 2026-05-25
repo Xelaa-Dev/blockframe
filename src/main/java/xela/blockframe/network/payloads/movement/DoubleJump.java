@@ -11,6 +11,7 @@ import xela.blockframe.network.payloads.records.ServerBoundMovementPayload;
 import java.util.UUID;
 
 public class DoubleJump {
+    //TODO: doubles as double jump logic, rename for code smell?
     static public void registerDoubleJump(){
         ServerPlayNetworking.registerGlobalReceiver(ServerBoundMovementPayload.TYPE, ((payload, context) -> {
 
