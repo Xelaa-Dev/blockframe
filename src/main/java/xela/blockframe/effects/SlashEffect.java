@@ -6,6 +6,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import xela.blockframe.BlockFrame;
 import xela.blockframe.data.DamageSources;
 
 
@@ -25,18 +26,23 @@ public class SlashEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplification) {
 
-        if (entity instanceof LivingEntity){
+        if (entity instanceof LivingEntity && ticks_passed == 0){
             DamageSource source =  new DamageSource(serverLevel.registryAccess()
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .get(DamageSources.SLASH_DAMAGE.identifier()).orElseThrow());
             double bleed_damage = Math.random();
-            double truncated = Math.floor(bleed_damage * 100) / 100;
+            
+            entity.hurtServer(serverLevel, source, (float) (bleed_damage * amplification));
 
-            entity.hurtServer(serverLevel, source, (float) (truncated * amplification));
-
+            ticks_passed++;
+        }
+        if (ticks_passed > 60){
+            ticks_passed = 0;
+        }else {
+            ticks_passed++;
         }
 
-        ticks_passed++;
+
         return super.applyEffectTick(serverLevel, entity, amplification);
     }
 }
