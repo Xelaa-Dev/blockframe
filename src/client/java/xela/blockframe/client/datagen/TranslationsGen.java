@@ -17,5 +17,6 @@ public class TranslationsGen extends FabricLanguageProvider {
         translationBuilder.add("key.blockframe.double_jump", "Double jump");
         translationBuilder.add("key.blockframe.roll", "Roll");
         translationBuilder.add("key.category.blockframe.blockframe", "Blockframe");
+        translationBuilder.add("effect.blockframe.slash", "Slash");
     }
 }
