@@ -11,7 +11,9 @@ import xela.blockframe.data.DamageSources;
 
 
 public class SlashEffect extends MobEffect {
+
     private static int ticks_passed = 0;
+    private static int ticks_max = 0;
     protected SlashEffect() {
         //Super calls the parent class MobEffects, the first argument is the type of Category, the second is the color as a int
         super(MobEffectCategory.HARMFUL, 0xF4320B);
@@ -25,20 +27,28 @@ public class SlashEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplification) {
+        if (amplification == 1){
+            ticks_max = 60;
+        }else {
+            ticks_max = Math.toIntExact(
+                    Math.round(
+                            (60 / Math.log10(amplification)) / 3.845)
+            );
+        }
 
         if (entity instanceof LivingEntity && ticks_passed == 0){
             DamageSource source =  new DamageSource(serverLevel.registryAccess()
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .get(DamageSources.SLASH_DAMAGE.identifier()).orElseThrow());
-            double bleed_damage = Math.random();
             
-            entity.hurtServer(serverLevel, source, (float) (bleed_damage * amplification));
+            entity.hurtServer(serverLevel, source, 1f);
 
             ticks_passed++;
         }
-        if (ticks_passed > 60){
+        if (ticks_passed > ticks_max){
             ticks_passed = 0;
         }else {
+            BlockFrame.LOGGER.info(String.valueOf(ticks_max));
             ticks_passed++;
         }
 
