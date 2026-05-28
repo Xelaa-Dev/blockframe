@@ -41,7 +41,7 @@ public class SlashEffect extends MobEffect {
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .get(DamageSources.SLASH_DAMAGE.identifier()).orElseThrow());
             
-            entity.hurtServer(serverLevel, source, 1f);
+            entity.hurtServer(serverLevel, source, 0.5f);
 
             ticks_passed++;
         }
