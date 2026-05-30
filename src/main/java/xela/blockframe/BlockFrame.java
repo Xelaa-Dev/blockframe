@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xela.blockframe.config.BlockFrameConfigWrapper;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.events.AttackedEvent;
 import xela.blockframe.events.ServerEventRegistrar;
@@ -18,7 +19,8 @@ public class BlockFrame implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
+	public static final BlockFrameConfigWrapper CONFIG = BlockFrameConfigWrapper.createAndLoad();
+	
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -26,8 +28,7 @@ public class BlockFrame implements ModInitializer {
 		// Proceed with mild caution.
 
 		BlockFrame.LOGGER.info(":3");
-		RegisterItems.init();
-		BlockFrame.LOGGER.info("Init networking");
+		//RegisterItems.init();
 		//Registrar order is important here, first Client then Server since the Client part registers packets
 		ClientPayloadRegistrar.init();
 		ServerPayloadRegistrar.init();

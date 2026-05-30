@@ -8,6 +8,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.BlockFrame;
+import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.network.payloads.classes.VectorPayload;
 import xela.blockframe.network.payloads.records.ServerBoundMovementPayload;
 
@@ -74,7 +75,7 @@ public class DoubleJumpRegistrar {
                         var payload = new VectorPayload();
                         payload.UUID = client.player.getStringUUID();
                         var pushVec = client.player.getLookAngle();
-                        payload.pushVector = pushVec.add(0,0.25,0);
+                        payload.pushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(),0);
                         payload.typeof = "DOUBLE_JUMP";
                         ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
                         hasJumped = false;

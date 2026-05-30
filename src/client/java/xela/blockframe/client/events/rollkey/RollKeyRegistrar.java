@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.BlockFrame;
+import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.client.events.doublejumpkey.DoubleJumpRegistrar;
 import xela.blockframe.network.payloads.classes.VectorPayload;
 import xela.blockframe.network.payloads.records.ServerBoundMovementPayload;
@@ -42,7 +43,7 @@ public class RollKeyRegistrar {
                         payload.UUID = client.player.getStringUUID();
                         var pushVec = client.player.getLookAngle();
                         //Void the y movement
-                        payload.pushVector = pushVec.add(0.2).add(0,-pushVec.y,0);
+                        payload.pushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
                         payload.typeof = "ROLL";
                         ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
                         BlockFrame.LOGGER.info(String.valueOf(ticksPassed));
