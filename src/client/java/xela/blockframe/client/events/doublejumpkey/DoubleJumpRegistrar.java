@@ -107,27 +107,6 @@ public class DoubleJumpRegistrar {
                         }
                         break;
                 }
-                /*
-                while (DoubleJumpRegistrar.doubleJump.consumeClick()) {
-                    if (isOnGround) continue;
-
-                    if (hasJumped && resetFlag) {
-                        var payload = new VectorPayload();
-                        payload.UUID = client.player.getStringUUID();
-                        var pushVec = client.player.getLookAngle();
-                        payload.pushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(),0);
-                        payload.typeof = "DOUBLE_JUMP";
-                        ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
-                        hasJumped = false;
-                        resetFlag = false;
-                    } else if (resetFlag) {
-                        hasJumped = true;
-                    }
-                    BlockFrame.LOGGER.info("pressing tick delta {}", ticksPassed_diagnostic);
-                    ticksPassed_diagnostic++;
-                }
-
-                 */
             }
         });
     }
