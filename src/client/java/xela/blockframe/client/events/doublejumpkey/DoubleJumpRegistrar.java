@@ -24,18 +24,22 @@ public class DoubleJumpRegistrar {
             CATEGORY
     ));
 
-    public static boolean hasJumped = false;
-    public static boolean resetFlag = false;
+
     private static boolean wasOnGround = true;
     private static int landingCooldown = 0;
+    private enum JumpState {
+        IDLE,
+        FIRST_PRESS,
+        MUST_RELEASE
+    }
+    private static JumpState jumpState = JumpState.IDLE;
 
+    //Yea i used claude for this i couldn't figure it out :(
     public static void registerDoubleJumpKeybind() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
 
             if (client.player != null && (!client.player.isInShallowWater() || !client.player.isInShallowWater() || !client.player.isInLava())) {
-                //Yea i used claude for this i couldn't figure it out :(
 
-                if (client.player == null || client.level == null) return;
             /*
             Check every tick where we are, if we weren't on ground
             and now we are, we need to wait before applying any double jump logic
@@ -48,10 +52,10 @@ public class DoubleJumpRegistrar {
             wait a couple ticks
              */
                 if (justLanded) {
-                    resetFlag = true;
-                    hasJumped = false;
+                    BlockFrame.LOGGER.info("Player landed, jumpstate to idle");
+                    jumpState = JumpState.IDLE;
                     landingCooldown = 2;
-                    while (DoubleJumpRegistrar.doubleJump.consumeClick()) { /* scarta */ }
+                    while (DoubleJumpRegistrar.doubleJump.consumeClick());
                     wasOnGround = true;
                     return;
                 }
@@ -63,11 +67,47 @@ public class DoubleJumpRegistrar {
             Actually delay the double jump logic
              */
                 if (landingCooldown > 0) {
+                    BlockFrame.LOGGER.info("Delay logic");
                     landingCooldown--;
-                    while (DoubleJumpRegistrar.doubleJump.consumeClick()) { /* scarta */ }
+                    while (DoubleJumpRegistrar.doubleJump.consumeClick());
                     return;
                 }
 
+                boolean isInputDown = doubleJump.isDown();
+
+                boolean hadClick = false;
+                while (doubleJump.consumeClick()) { hadClick = true; }
+
+                if (isOnGround) {
+                    BlockFrame.LOGGER.info("PLayer is on ground, jumpstate to idle");
+                    jumpState = JumpState.IDLE;
+                    return;
+                }
+
+                switch (jumpState) {
+                    case IDLE:
+                        if (hadClick) {
+                            jumpState = JumpState.FIRST_PRESS;
+                        }
+                        break;
+                    case FIRST_PRESS:
+                        if (!isInputDown) {
+                            jumpState = JumpState.MUST_RELEASE;
+                        }
+                        break;
+                    case MUST_RELEASE:
+                        if (hadClick) {
+                            var payload = new VectorPayload();
+                            payload.UUID = client.player.getStringUUID();
+                            var pushVec = client.player.getLookAngle();
+                            payload.pushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
+                            payload.typeof = "DOUBLE_JUMP";
+                            ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
+                            jumpState = JumpState.IDLE;
+                        }
+                        break;
+                }
+                /*
                 while (DoubleJumpRegistrar.doubleJump.consumeClick()) {
                     if (isOnGround) continue;
 
@@ -83,7 +123,11 @@ public class DoubleJumpRegistrar {
                     } else if (resetFlag) {
                         hasJumped = true;
                     }
+                    BlockFrame.LOGGER.info("pressing tick delta {}", ticksPassed_diagnostic);
+                    ticksPassed_diagnostic++;
                 }
+
+                 */
             }
         });
     }
