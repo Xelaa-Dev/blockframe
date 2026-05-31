@@ -8,7 +8,6 @@ import xela.blockframe.config.BlockFrameConfigWrapper;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.events.AttackedEvent;
 import xela.blockframe.events.ServerEventRegistrar;
-import xela.blockframe.items.RegisterItems;
 import xela.blockframe.network.ClientPayloadRegistrar;
 import xela.blockframe.network.ServerPayloadRegistrar;
 

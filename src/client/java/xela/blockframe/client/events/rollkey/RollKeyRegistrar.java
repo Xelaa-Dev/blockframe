@@ -46,7 +46,6 @@ public class RollKeyRegistrar {
                         payload.pushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
                         payload.typeof = "ROLL";
                         ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
-                        BlockFrame.LOGGER.info(String.valueOf(ticksPassed));
                         ticksPassed = 0;
                         hasBeenPressed = false;
                     }else {

@@ -11,6 +11,9 @@ public class EffectsRegistrar {
     public static final Holder<MobEffect> SLASH = Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "slash"), new SlashEffect());
 
+    public static final Holder<MobEffect> COLD = Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
+            Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "cold"), new ColdEffect());
+
     public static void init(){
 
     }

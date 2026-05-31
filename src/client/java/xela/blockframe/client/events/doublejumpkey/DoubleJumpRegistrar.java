@@ -52,7 +52,6 @@ public class DoubleJumpRegistrar {
             wait a couple ticks
              */
                 if (justLanded) {
-                    BlockFrame.LOGGER.info("Player landed, jumpstate to idle");
                     jumpState = JumpState.IDLE;
                     landingCooldown = 2;
                     while (DoubleJumpRegistrar.doubleJump.consumeClick());
@@ -67,7 +66,6 @@ public class DoubleJumpRegistrar {
             Actually delay the double jump logic
              */
                 if (landingCooldown > 0) {
-                    BlockFrame.LOGGER.info("Delay logic");
                     landingCooldown--;
                     while (DoubleJumpRegistrar.doubleJump.consumeClick());
                     return;
@@ -79,7 +77,6 @@ public class DoubleJumpRegistrar {
                 while (doubleJump.consumeClick()) { hadClick = true; }
 
                 if (isOnGround) {
-                    BlockFrame.LOGGER.info("PLayer is on ground, jumpstate to idle");
                     jumpState = JumpState.IDLE;
                     return;
                 }
