@@ -3,7 +3,6 @@ package xela.blockframe.client.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
-import xela.blockframe.BlockFrame;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,10 +14,20 @@ public class TranslationsGen extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
+        /*
+        KEYBINDS
+         */
         translationBuilder.add("key.blockframe.double_jump", "Double jump");
         translationBuilder.add("key.blockframe.roll", "Roll");
         translationBuilder.add("key.category.blockframe.blockframe", "Blockframe");
+        /*
+        EFFECTS
+         */
         translationBuilder.add("effect.blockframe.slash", "Slash");
+        translationBuilder.add("effect.blockframe.cold", "Cold");
+         /*
+        MOD SPECIFIC (MOD MENU VIA OWOLIB)
+         */
         translationBuilder.add("text.config.Blockframe.title", "Blockframe Config");
         translationBuilder.add("text.config.Blockframe.option.should_roll_for_status_effects_on_player_damaged",
                 "Should roll for status effects on player damaged");

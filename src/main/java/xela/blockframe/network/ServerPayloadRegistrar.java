@@ -1,7 +1,5 @@
 package xela.blockframe.network;
 
-import xela.blockframe.network.payloads.movement.DoubleJump;
-
 
 ///The server payload register actually registers and defines what to do when a packet is inbound
 /// It's important to note: the server HANDLES MOVEMENT!
@@ -11,7 +9,7 @@ import xela.blockframe.network.payloads.movement.DoubleJump;
 public class ServerPayloadRegistrar {
     static public  void init(){
 
-        DoubleJump.registerDoubleJump();
+        ChannelRegistrar.init();
     }
 
 

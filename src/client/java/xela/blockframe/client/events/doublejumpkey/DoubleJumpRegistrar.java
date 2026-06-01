@@ -3,14 +3,13 @@ package xela.blockframe.client.events.doublejumpkey;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
-import xela.blockframe.network.payloads.classes.VectorPayload;
-import xela.blockframe.network.payloads.records.ServerBoundMovementPayload;
+import xela.blockframe.network.ChannelRegistrar;
+import xela.blockframe.network.payloads.records.MovementVectorPacket;
 
 public class DoubleJumpRegistrar {
     public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(
@@ -94,12 +93,12 @@ public class DoubleJumpRegistrar {
                         break;
                     case MUST_RELEASE:
                         if (hadClick) {
-                            var payload = new VectorPayload();
-                            payload.UUID = client.player.getStringUUID();
                             var pushVec = client.player.getLookAngle();
-                            payload.pushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
-                            payload.typeof = "DOUBLE_JUMP";
-                            ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
+                            var finalPushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
+                            var typeof = "DOUBLE_JUMP";
+                            ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,client.player.getStringUUID(),typeof));
+
+                            //ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
                             jumpState = JumpState.IDLE;
                         }
                         break;

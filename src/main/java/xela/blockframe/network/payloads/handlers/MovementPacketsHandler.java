@@ -1,25 +1,24 @@
-package xela.blockframe.network.payloads.movement;
+package xela.blockframe.network.payloads.handlers;
 
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import xela.blockframe.BlockFrame;
-import xela.blockframe.effects.ColdEffect;
 import xela.blockframe.effects.EffectsRegistrar;
-import xela.blockframe.network.payloads.records.ServerBoundMovementPayload;
+import xela.blockframe.network.ChannelRegistrar;
+import xela.blockframe.network.payloads.records.MovementVectorPacket;
 
 import java.util.UUID;
 
-public class DoubleJump {
-    //TODO: doubles as double jump logic, rename for code smell?
-    static public void registerDoubleJump(){
-        ServerPlayNetworking.registerGlobalReceiver(ServerBoundMovementPayload.TYPE, ((payload, context) -> {
-            Vec3 newVec3 = null;
+public class MovementPacketsHandler {
+    public static void registerMovementPackets(){
+        ChannelRegistrar.SERVERBOUND_CHANNEL.registerServerbound(MovementVectorPacket.class, (message, access) ->{
+            BlockFrame.LOGGER.info("Received message: " + message);
+            Vec3 newVec3;
             BlockFrame.LOGGER.debug("[SERVER] received packet");
-            Entity entity = context.player().level().getEntity(UUID.fromString(payload.vecPayload().UUID));
+            Entity entity = access.player().level().getEntity(UUID.fromString(message.UUID()));
 
             if (entity instanceof ServerPlayer && !entity.level().isClientSide()){
 
@@ -27,14 +26,14 @@ public class DoubleJump {
                     var effect = ((ServerPlayer) entity).getEffect(EffectsRegistrar.COLD);
                     var dampening = 1- (effect.getAmplifier() * (Math.pow(10,-1)));
 
-                    BlockFrame.LOGGER.info("Vec before {}", payload.vecPayload().pushVector);
+                    BlockFrame.LOGGER.info("Vec before {}", message.pushVector());
 
-                    newVec3 = payload.vecPayload().pushVector.multiply(dampening,dampening,dampening);
+                    newVec3 = message.pushVector().multiply(dampening,dampening,dampening);
 
                     BlockFrame.LOGGER.info("Vec after {}", newVec3);
                     entity.push(newVec3);
                 }else{
-                    entity.push(payload.vecPayload().pushVector);
+                    entity.push(message.pushVector());
                 }
 
 
@@ -43,6 +42,6 @@ public class DoubleJump {
 
                 entity.playSound(SoundEvents.SAND_PLACE, 10.0F, 1.0F);
             }
-        }));
+        });
     }
 }
