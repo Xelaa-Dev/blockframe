@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
 
+import java.util.Random;
+
 public class AttackedEvent {
     public static void attackEventRegistrar() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::registerAttackedEvent);
@@ -16,12 +18,18 @@ public class AttackedEvent {
 
     public static void registerAttackedEvent(LivingEntity entity, DamageSource source, float baseDamageTaken,
                                              float damageTaken, boolean blocked) {
+        Random rand = new Random();
         //TODO: damage by type of mob?
         if (entity instanceof Player player && source.getEntity() instanceof Entity) {
             //TODO: scale with server time / player level?
             if (Math.random() > (1 - BlockFrame.CONFIG.chanche_for_status_effects_to_apply()) && BlockFrame.CONFIG.should_roll_for_status_effects_on_player_damaged()){
-                player.addEffect(new MobEffectInstance(EffectsRegistrar.SLASH, 10*20, 1, true,
-                        true,true));
+                player.addEffect(new MobEffectInstance(
+                        EffectsRegistrar.EFFECTS.get(rand.nextInt(EffectsRegistrar.EFFECTS.size())),
+                        10*20,
+                        1,
+                        true,
+                        true,
+                        true));
             }
 
             /*
