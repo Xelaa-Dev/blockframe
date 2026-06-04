@@ -17,5 +17,21 @@
   "slots": [
     "mainhand",
     "offhand"
-  ]
+  ],
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "blockframe:cold_enchantment",
+          "amount": {
+            "type": "minecraft:linear",
+            "base": 1,
+            "per_level_above_first": 0.2
+          }
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  }
 }
