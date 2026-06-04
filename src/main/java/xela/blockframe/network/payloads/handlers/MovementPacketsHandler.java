@@ -15,9 +15,7 @@ import java.util.UUID;
 public class MovementPacketsHandler {
     public static void registerMovementPackets(){
         ChannelRegistrar.SERVERBOUND_CHANNEL.registerServerbound(MovementVectorPacket.class, (message, access) ->{
-            BlockFrame.LOGGER.info("Received message: " + message);
             Vec3 newVec3;
-            BlockFrame.LOGGER.debug("[SERVER] received packet");
             Entity entity = access.player().level().getEntity(UUID.fromString(message.UUID()));
 
             if (entity instanceof ServerPlayer && !entity.level().isClientSide()){
@@ -26,11 +24,9 @@ public class MovementPacketsHandler {
                     var effect = ((ServerPlayer) entity).getEffect(EffectsRegistrar.COLD);
                     var dampening = 1- (effect.getAmplifier() * (Math.pow(10,-1)));
 
-                    BlockFrame.LOGGER.info("Vec before {}", message.pushVector());
 
                     newVec3 = message.pushVector().multiply(dampening,dampening,dampening);
 
-                    BlockFrame.LOGGER.info("Vec after {}", newVec3);
                     entity.push(newVec3);
                 }else{
                     entity.push(message.pushVector());

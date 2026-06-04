@@ -1,6 +1,7 @@
 {
   "effect.blockframe.cold": "Cold",
   "effect.blockframe.slash": "Slash",
+  "enchantment.blockframe.cold": "Cold",
   "key.blockframe.double_jump": "Double jump",
   "key.blockframe.roll": "Roll",
   "key.category.blockframe.blockframe": "Blockframe",

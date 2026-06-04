@@ -35,5 +35,9 @@ public class TranslationsGen extends FabricLanguageProvider {
                 "Chanche for status effects to apply");
         translationBuilder.add("text.config.Blockframe.option.force_applied_on_movment",
                 "Force applied on special movements");
+        /*
+        ENCHANTMENTS
+         */
+        translationBuilder.add("enchantment.blockframe.cold", "Cold");
     }
 }

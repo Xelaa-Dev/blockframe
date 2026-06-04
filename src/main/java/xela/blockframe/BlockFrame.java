@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xela.blockframe.config.BlockFrameConfigWrapper;
 import xela.blockframe.effects.EffectsRegistrar;
+import xela.blockframe.enchantment.EnchantmentRegistrar;
 import xela.blockframe.events.AttackedEvent;
 import xela.blockframe.events.ServerEventRegistrar;
 import xela.blockframe.network.ServerPayloadRegistrar;
@@ -32,5 +33,6 @@ public class BlockFrame implements ModInitializer {
 		ServerEventRegistrar.init();
 		EffectsRegistrar.init();
 		AttackedEvent.attackEventRegistrar();
+		EnchantmentRegistrar.init();
 	}
 }

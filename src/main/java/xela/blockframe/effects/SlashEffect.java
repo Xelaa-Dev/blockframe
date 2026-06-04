@@ -48,7 +48,6 @@ public class SlashEffect extends MobEffect {
         if (ticks_passed > ticks_max){
             ticks_passed = 0;
         }else {
-            BlockFrame.LOGGER.info(String.valueOf(ticks_max));
             ticks_passed++;
         }
 
