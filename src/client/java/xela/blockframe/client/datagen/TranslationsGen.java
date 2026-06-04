@@ -14,9 +14,30 @@ public class TranslationsGen extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
+        /*
+        KEYBINDS
+         */
         translationBuilder.add("key.blockframe.double_jump", "Double jump");
         translationBuilder.add("key.blockframe.roll", "Roll");
         translationBuilder.add("key.category.blockframe.blockframe", "Blockframe");
+        /*
+        EFFECTS
+         */
         translationBuilder.add("effect.blockframe.slash", "Slash");
+        translationBuilder.add("effect.blockframe.cold", "Cold");
+         /*
+        MOD SPECIFIC (MOD MENU VIA OWOLIB)
+         */
+        translationBuilder.add("text.config.Blockframe.title", "Blockframe Config");
+        translationBuilder.add("text.config.Blockframe.option.should_roll_for_status_effects_on_player_damaged",
+                "Should roll for status effects on player damaged");
+        translationBuilder.add("text.config.Blockframe.option.chanche_for_status_effects_to_apply",
+                "Chanche for status effects to apply");
+        translationBuilder.add("text.config.Blockframe.option.force_applied_on_movment",
+                "Force applied on special movements");
+        /*
+        ENCHANTMENTS
+         */
+        translationBuilder.add("enchantment.blockframe.cold", "Cold");
     }
 }

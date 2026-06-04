@@ -11,7 +11,8 @@ public class DamageSources {
     public static final ResourceKey<DamageType> SLASH_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "slash"));
 
-
+    public static final ResourceKey<DamageType> COLD_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,
+            Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "cold"));
 
     public static void init(){
         //init all static variables in file

@@ -21,6 +21,10 @@ repositories {
 		}
 		filter { includeGroupAndSubgroups('com.geckolib') }
 	}
+	maven { url 'https://maven.wispforest.io/releases/' }
+
+	// since owo 0.13.0, jitpack is required for kdl4j
+	maven { url 'https://jitpack.io' }
 }
 
 loom {
@@ -53,7 +57,10 @@ dependencies {
 	//Geckolib
 	implementation "com.geckolib:geckolib-fabric-${minecraft_version}:${geckolibVersion}"
 
+	//OWOlib stuff
+	implementation "io.wispforest:owo-lib:${project.owo_version}"
 
+	annotationProcessor implementation("io.wispforest:owo-lib:${project.owo_version}")
 }
 
 processResources {
@@ -96,10 +103,6 @@ publishing {
 
 	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
 
 	}
 }

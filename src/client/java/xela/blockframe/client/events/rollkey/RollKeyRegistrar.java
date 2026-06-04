@@ -3,13 +3,12 @@ package xela.blockframe.client.events.rollkey;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
-import xela.blockframe.BlockFrame;
+import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.client.events.doublejumpkey.DoubleJumpRegistrar;
-import xela.blockframe.network.payloads.classes.VectorPayload;
-import xela.blockframe.network.payloads.records.ServerBoundMovementPayload;
+import xela.blockframe.network.ChannelRegistrar;
+import xela.blockframe.network.payloads.records.MovementVectorPacket;
 
 
 public class RollKeyRegistrar {
@@ -38,14 +37,12 @@ public class RollKeyRegistrar {
                 while (Roll.consumeClick()) {
                     if (hasBeenPressed && ticksPassed < 15 && client.player != null) {
                         landingCooldown = 20;
-                        var payload = new VectorPayload();
-                        payload.UUID = client.player.getStringUUID();
                         var pushVec = client.player.getLookAngle();
                         //Void the y movement
-                        payload.pushVector = pushVec.add(0.2).add(0,-pushVec.y,0);
-                        payload.typeof = "ROLL";
-                        ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
-                        BlockFrame.LOGGER.info(String.valueOf(ticksPassed));
+                        var finalPushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
+                        var typeof = "ROLL";
+                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,client.player.getStringUUID(),typeof));
+
                         ticksPassed = 0;
                         hasBeenPressed = false;
                     }else {

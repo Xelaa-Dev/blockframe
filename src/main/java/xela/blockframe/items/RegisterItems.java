@@ -15,15 +15,16 @@ import java.util.function.Function;
 
 public class RegisterItems {
 
+    /*
 
     public static final Item LOTUS_FLOWER = registerItem("lotus_flower", Item::new, new Item.Properties());
 
     public static  void init(){
-        /*
-        java inits all the fields marked as static in a class, so we dont need to fill the init method and just add items
-        by calling the register as static variables.
-        We will be using it for tab assignation
-         */
+
+        // java inits all the fields marked as static in a class, so we dont need to fill the init method and just add items
+        // by calling the register as static variables.
+        // We will be using it for tab assignation
+
 
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
                 .register((creativeTab) -> creativeTab.accept(RegisterItems.LOTUS_FLOWER));
@@ -44,4 +45,5 @@ public class RegisterItems {
 
         return item;
     }
+    */
 }
