@@ -4,6 +4,10 @@ import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 
+/*
+Since i implemented books for enchantments, either i rethink how to do status effects or this remains to be deleted
+ */
+@Deprecated
 public class AttackEvent {
     public static void registerAttackEvent(){
         AttackEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {

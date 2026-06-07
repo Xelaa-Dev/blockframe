@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.client.events.doublejumpkey.DoubleJumpRegistrar;
@@ -29,31 +30,33 @@ public class RollKeyRegistrar {
 
     public static void registerRollKeybind(){
         ClientTickEvents.END_CLIENT_TICK.register(client ->{
-            ticksPassed++;
-            if (landingCooldown > 0){
-                while(Roll.consumeClick());
-                landingCooldown = landingCooldown - 1;
-            }else if ( landingCooldown <= 0){
-                while (Roll.consumeClick()) {
-                    if (hasBeenPressed && ticksPassed < 15 && client.player != null) {
-                        landingCooldown = 20;
-                        var pushVec = client.player.getLookAngle();
-                        //Void the y movement
-                        var finalPushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
-                        var typeof = "ROLL";
-                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,client.player.getStringUUID(),typeof));
+            processRollTickLogic(client);
+        });
+    }
 
-                        ticksPassed = 0;
-                        hasBeenPressed = false;
-                    }else {
-                        ticksPassed = 0;
-                        hasBeenPressed = true;
-                        return;
-                    }
+    private static void processRollTickLogic(Minecraft client) {
+        ticksPassed++;
+        if (landingCooldown > 0){
+            while(Roll.consumeClick());
+            landingCooldown = landingCooldown - 1;
+        }else if ( landingCooldown <= 0){
+            while (Roll.consumeClick()) {
+                if (hasBeenPressed && ticksPassed < 15 && client.player != null) {
+                    landingCooldown = 20;
+                    var pushVec = client.player.getLookAngle();
+                    //Void the y movement
+                    var finalPushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
+                    var typeof = "ROLL";
+                    ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(),typeof));
+
+                    ticksPassed = 0;
+                    hasBeenPressed = false;
+                }else {
+                    ticksPassed = 0;
+                    hasBeenPressed = true;
+                    return;
                 }
             }
-
-
-        });
+        }
     }
 }

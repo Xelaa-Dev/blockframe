@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.network.ChannelRegistrar;
 import xela.blockframe.network.payloads.records.MovementVectorPacket;
