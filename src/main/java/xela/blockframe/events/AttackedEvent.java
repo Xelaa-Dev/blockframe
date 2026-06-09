@@ -31,16 +31,6 @@ public class AttackedEvent {
                         true,
                         true));
             }
-
-            /*
-            BlockFrame.LOGGER.info("Entity {} took damage from {}. Base damage: {}, Actual damage: {}, Blocked: {}",
-                    entity.getName().getString(),
-                    source.getEntity() != null ? source.getEntity().getName().getString() : "unknown",
-                    baseDamageTaken,
-                    damageTaken,
-                    blocked);
-
-             */
         }
     }
 }

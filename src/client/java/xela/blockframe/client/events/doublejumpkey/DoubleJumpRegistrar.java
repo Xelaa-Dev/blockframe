@@ -4,12 +4,19 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.Vec3;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.network.ChannelRegistrar;
 import xela.blockframe.network.payloads.records.MovementVectorPacket;
+
+/*
+This function will be heavily commented for the sake of my sanity and to understand better how it all works,
+i did rewrite most of it myself but i still had AI help so i need to document what it did
+ */
 
 public class DoubleJumpRegistrar {
     public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(
@@ -36,74 +43,84 @@ public class DoubleJumpRegistrar {
     //Yea i used claude for this i couldn't figure it out :(
     public static void registerDoubleJumpKeybind() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-
-            if (client.player != null && (!client.player.isInShallowWater() || !client.player.isInShallowWater() || !client.player.isInLava())) {
-
-            /*
-            Check every tick where we are, if we weren't on ground
-            and now we are, we need to wait before applying any double jump logic
-            */
-                boolean isOnGround = client.player.onGround();
-                boolean justLanded = !wasOnGround && isOnGround;
-
-            /*
-            If we just landed, we should reset all the flags to make the double jump but void inputs and
-            wait a couple ticks
-             */
-                if (justLanded) {
-                    jumpState = JumpState.IDLE;
-                    landingCooldown = 2;
-                    while (DoubleJumpRegistrar.doubleJump.consumeClick());
-                    wasOnGround = true;
-                    return;
-                }
-
-                //we store what happened this tick to check what happens in the next
-                wasOnGround = isOnGround;
-
-            /*
-            Actually delay the double jump logic
-             */
-                if (landingCooldown > 0) {
-                    landingCooldown--;
-                    while (DoubleJumpRegistrar.doubleJump.consumeClick());
-                    return;
-                }
-
-                boolean isInputDown = doubleJump.isDown();
-
-                boolean hadClick = false;
-                while (doubleJump.consumeClick()) { hadClick = true; }
-
-                if (isOnGround) {
-                    jumpState = JumpState.IDLE;
-                    return;
-                }
-
-                switch (jumpState) {
-                    case IDLE:
-                        if (hadClick) {
-                            jumpState = JumpState.FIRST_PRESS;
-                        }
-                        break;
-                    case FIRST_PRESS:
-                        if (!isInputDown) {
-                            jumpState = JumpState.MUST_RELEASE;
-                        }
-                        break;
-                    case MUST_RELEASE:
-                        if (hadClick) {
-                            var pushVec = client.player.getLookAngle();
-                            var finalPushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
-                            var typeof = "DOUBLE_JUMP";
-                            ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,client.player.getStringUUID(),typeof));
-
-                            //ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
-                            jumpState = JumpState.IDLE;
-                        }
-                        break;
-                }
-            }
+            processDoubleJumpTickLogic(client);
         });
+    }
+
+
+    private static void processDoubleJumpTickLogic(Minecraft client) {
+        //Necessary checks since if we swim up we will eventually go to the surface and accept the double jump since we kept space pressed
+        if (client.player != null && (!client.player.isInShallowWater() || !client.player.isInShallowWater() || !client.player.isInLava())) {
+
+        /*
+        Check every tick where we are, if we weren't on ground
+        and now we are, we need to wait before applying any double jump logic
+        */
+            boolean isOnGround = client.player.onGround();
+            boolean justLanded = !wasOnGround && isOnGround;
+
+        /*
+        If we just landed, we should reset all the flags to make the double jump voids inputs and
+        wait a couple ticks
+         */
+            if (justLanded) {
+                jumpState = JumpState.IDLE;
+                landingCooldown = 2;
+                while (DoubleJumpRegistrar.doubleJump.consumeClick());
+                wasOnGround = true;
+                return;
+            }
+
+            //we store what happened this tick to check what happens in the next
+            wasOnGround = isOnGround;
+
+        /*
+        Actually delay the double jump logic
+         */
+            if (landingCooldown > 0) {
+                landingCooldown--;
+                while (DoubleJumpRegistrar.doubleJump.consumeClick());
+                return;
+            }
+
+            boolean isInputDown = doubleJump.isDown();
+
+            boolean hadClick = false;
+            while (doubleJump.consumeClick()) { hadClick = true; }
+
+            if (isOnGround) {
+                jumpState = JumpState.IDLE;
+                return;
+            }
+
+            switch (jumpState) {
+                case IDLE:
+                    if (hadClick) {
+                        jumpState = JumpState.FIRST_PRESS;
+                    }
+                    break;
+                case FIRST_PRESS:
+                    if (!isInputDown) {
+                        jumpState = JumpState.MUST_RELEASE;
+                    }
+                    break;
+                case MUST_RELEASE:
+                    if (hadClick) {
+                        Vec3 finalPushVector    ;
+                        if (client.player.getDeltaMovement().x == 0 && client.player.getDeltaMovement().z == 0){
+                            finalPushVector = new Vec3(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
+                        }else{
+                            var pushVec = client.player.getLookAngle();
+                            finalPushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
+                        }
+                        var typeof = "DOUBLE_JUMP";
+                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(),typeof));
+
+                        //ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
+                        jumpState = JumpState.IDLE;
+                    }
+                    break;
+            }
+        }
     }
 }

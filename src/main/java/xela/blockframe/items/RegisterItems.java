@@ -6,7 +6,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import xela.blockframe.BlockFrame;
@@ -14,8 +13,6 @@ import xela.blockframe.BlockFrame;
 import java.util.function.Function;
 
 public class RegisterItems {
-
-    /*
 
     public static final Item LOTUS_FLOWER = registerItem("lotus_flower", Item::new, new Item.Properties());
 
@@ -28,7 +25,7 @@ public class RegisterItems {
 
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS)
                 .register((creativeTab) -> creativeTab.accept(RegisterItems.LOTUS_FLOWER));
-    };
+    }
 
 
                 //Extend generic methods from T (parent class) to Item (child class)
@@ -45,5 +42,5 @@ public class RegisterItems {
 
         return item;
     }
-    */
+
 }
