@@ -39,5 +39,6 @@ public class TranslationsGen extends FabricLanguageProvider {
         ENCHANTMENTS
          */
         translationBuilder.add("enchantment.blockframe.cold", "Cold");
+        translationBuilder.add("enchantment.blockframe.bleed", "Slash");
     }
 }
