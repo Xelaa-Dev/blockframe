@@ -1,4 +1,4 @@
-package xela.blockframe.network.payloads.records;
+package xela.blockframe.networking.payloads.records;
 
 import net.minecraft.world.phys.Vec3;
 

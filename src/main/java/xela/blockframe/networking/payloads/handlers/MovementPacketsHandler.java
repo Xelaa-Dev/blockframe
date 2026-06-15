@@ -1,4 +1,4 @@
-package xela.blockframe.network.payloads.handlers;
+package xela.blockframe.networking.payloads.handlers;
 
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
@@ -10,8 +10,8 @@ import net.minecraft.world.phys.Vec3;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.enums.BlockframePacketType;
-import xela.blockframe.network.ChannelRegistrar;
-import xela.blockframe.network.payloads.records.MovementVectorPacket;
+import xela.blockframe.networking.ChannelRegistrar;
+import xela.blockframe.networking.payloads.records.MovementVectorPacket;
 
 import java.util.Random;
 import java.util.UUID;

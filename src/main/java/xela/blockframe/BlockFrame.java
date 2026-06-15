@@ -9,7 +9,7 @@ import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.enchantment.EnchantmentRegistrar;
 import xela.blockframe.events.AttackedEvent;
 import xela.blockframe.events.ServerEventRegistrar;
-import xela.blockframe.network.ServerPayloadRegistrar;
+import xela.blockframe.networking.ServerPayloadRegistrar;
 
 public class BlockFrame implements ModInitializer {
 	public static final String MOD_ID = "blockframe";
@@ -19,6 +19,10 @@ public class BlockFrame implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final BlockFrameConfigWrapper CONFIG = BlockFrameConfigWrapper.createAndLoad();
+
+	public static boolean CALC_FALL_DAMAGE = true;
+	public static boolean MAKE_FALL_DAMAGE_RESET_FLAG = false;
+
 
 	@Override
 	public void onInitialize() {

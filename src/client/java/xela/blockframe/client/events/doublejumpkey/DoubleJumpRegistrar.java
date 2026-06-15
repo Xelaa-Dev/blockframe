@@ -10,8 +10,8 @@ import net.minecraft.world.phys.Vec3;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
-import xela.blockframe.network.ChannelRegistrar;
-import xela.blockframe.network.payloads.records.MovementVectorPacket;
+import xela.blockframe.networking.ChannelRegistrar;
+import xela.blockframe.networking.payloads.records.MovementVectorPacket;
 
 /*
 This function will be heavily commented for the sake of my sanity and to understand better how it all works,
@@ -50,7 +50,7 @@ public class DoubleJumpRegistrar {
 
     private static void processDoubleJumpTickLogic(Minecraft client) {
         //Necessary checks since if we swim up we will eventually go to the surface and accept the double jump since we kept space pressed
-        if (client.player != null && (!client.player.isInShallowWater() || !client.player.isInShallowWater() || !client.player.isInLava())) {
+        if (client.player != null && (!client.player.isInShallowWater() && !client.player.isInWater() && !client.player.isInLava())) {
 
         /*
         Check every tick where we are, if we weren't on ground
@@ -106,7 +106,7 @@ public class DoubleJumpRegistrar {
                     break;
                 case MUST_RELEASE:
                     if (hadClick) {
-                        Vec3 finalPushVector    ;
+                        Vec3 finalPushVector;
                         if (client.player.getDeltaMovement().x == 0 && client.player.getDeltaMovement().z == 0){
                             finalPushVector = new Vec3(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
                         }else{

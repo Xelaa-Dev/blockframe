@@ -8,8 +8,8 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.client.events.doublejumpkey.DoubleJumpRegistrar;
-import xela.blockframe.network.ChannelRegistrar;
-import xela.blockframe.network.payloads.records.MovementVectorPacket;
+import xela.blockframe.networking.ChannelRegistrar;
+import xela.blockframe.networking.payloads.records.MovementVectorPacket;
 
 
 public class RollKeyRegistrar {
