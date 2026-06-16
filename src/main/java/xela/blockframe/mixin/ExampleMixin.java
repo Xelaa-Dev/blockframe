@@ -16,9 +16,8 @@ public abstract class ExampleMixin {
 
 	@ModifyReturnValue(method = "calculateFallDamage", at = @At(value = "TAIL"))
 	private int ignoreFallDamage(int original) {
-		if (this.asLivingEntity() instanceof Player player && !BlockFrame.CALC_FALL_DAMAGE){
+		if (!BlockFrame.CALC_FALL_DAMAGE){
 			BlockFrame.LOGGER.info("ticking mixin");
-
 			return 0;
 		}else if (BlockFrame.CALC_FALL_DAMAGE){
 			return original;

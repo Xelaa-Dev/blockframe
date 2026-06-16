@@ -11,6 +11,7 @@ import org.lwjgl.glfw.GLFW;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.networking.ChannelRegistrar;
+import xela.blockframe.networking.payloads.records.GenericStringMessagePacket;
 import xela.blockframe.networking.payloads.records.MovementVectorPacket;
 
 /*
@@ -30,7 +31,7 @@ public class DoubleJumpRegistrar {
             CATEGORY
     ));
 
-
+    public static boolean fallingFromDoubleJump = false;
     private static boolean wasOnGround = true;
     private static int landingCooldown = 0;
     private enum JumpState {
@@ -114,9 +115,13 @@ public class DoubleJumpRegistrar {
                             finalPushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
                         }
                         var typeof = "DOUBLE_JUMP";
-                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(),typeof));
+                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,
+                                client.player.getStringUUID(),typeof));
 
-                        //ClientPlayNetworking.send(new ServerBoundMovementPayload(payload));
+                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
+                                "FALL_DAMAGE_DISABLE",client.player.getStringUUID() ));
+
+                        fallingFromDoubleJump = true;
                         jumpState = JumpState.IDLE;
                     }
                     break;

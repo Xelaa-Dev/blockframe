@@ -1,5 +1,6 @@
 package xela.blockframe.networking.payloads.handlers;
 
+import io.wispforest.owo.network.ServerAccess;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,53 +20,53 @@ import java.util.UUID;
 public class MovementPacketsHandler {
     public static Random randomPitch = new Random();
     public static void registerMovementPackets(){
-        ChannelRegistrar.SERVERBOUND_CHANNEL.registerServerbound(MovementVectorPacket.class, (message, access) ->{
-            Vec3 newVec3;
-            Entity entity = access.player().level().getEntity(UUID.fromString(message.UUID()));
+        ChannelRegistrar.SERVERBOUND_CHANNEL.registerServerbound(MovementVectorPacket.class, MovementPacketsHandler::handler);
+    }
 
-            if (entity instanceof ServerPlayer && !entity.level().isClientSide()){
+    private static void handler(MovementVectorPacket message, ServerAccess access) {
+        Vec3 newVec3;
+        Entity entity = access.player().level().getEntity(UUID.fromString(message.UUID()));
 
-                if (((ServerPlayer) entity).hasEffect(EffectsRegistrar.COLD)){
-                    var effect = ((ServerPlayer) entity).getEffect(EffectsRegistrar.COLD);
-                    var dampening = 1- (effect.getAmplifier() * (Math.pow(10,-1)));
+        if (entity instanceof ServerPlayer && !entity.level().isClientSide()) {
 
-
-                    newVec3 = message.pushVector().multiply(dampening,dampening,dampening);
-
-                    entity.push(newVec3);
+            if (((ServerPlayer) entity).hasEffect(EffectsRegistrar.COLD)) {
+                var effect = ((ServerPlayer) entity).getEffect(EffectsRegistrar.COLD);
+                var dampening = 1 - (effect.getAmplifier() * (Math.pow(10, -1)));
 
 
-                }else{
-                    entity.push(message.pushVector());
-                }
+                newVec3 = message.pushVector().multiply(dampening, dampening, dampening);
+
+                entity.push(newVec3);
 
 
-
-                //Get the player entity as a generic Entity class to get connection (?)
-                ((ServerPlayer)entity).connection.send(new ClientboundSetEntityMotionPacket(entity));
-
-                if (message.typeof() != null
-                        && (message.typeof().equals(BlockframePacketType.DOUBLE_JUMP.name) || message.typeof().equals(BlockframePacketType.ROLL.name))
-                        && BlockFrame.CONFIG.play_double_jump_sound()){
-                    ((ServerPlayer) entity).connection.send(new ClientboundSoundPacket(SoundEvents.ARMOR_EQUIP_WOLF, SoundSource.PLAYERS,
-                            entity.position().x,
-                            entity.position().y,
-                            entity.position().z,
-                            2f,
-                            /* a pitch of 0 would not be nice so we up the base to 0.5 since
-                            nextFloat returns from 0.0 to 1.0 */
-                            randomPitch.nextFloat() * 0.5f,
-                            0
-                    ));
-                }
-                else if (message.typeof() == null){
-                    throw new RuntimeException("Malformed packet type received! Expected a typeof movement payload");
-                }
+            } else {
+                entity.push(message.pushVector());
             }
-            //TODO: Doesnt work like this but above by manually syncing it does?
-            //Because of how sound is synced, it needs to be OUTSIDE ifs that include checking if we are on the server (nvm lol)
-            //entity.playSound(SoundEvents.ARMOR_EQUIP_WOLF.value(), 2f,0.7f);
 
-        });
+
+            //Get the player entity as a generic Entity class to get connection (?)
+            ((ServerPlayer) entity).connection.send(new ClientboundSetEntityMotionPacket(entity));
+
+            if (message.typeof() != null
+                    && (message.typeof().equals(BlockframePacketType.DOUBLE_JUMP.name) || message.typeof().equals(BlockframePacketType.ROLL.name))
+                    && BlockFrame.CONFIG.play_double_jump_sound()) {
+                ((ServerPlayer) entity).connection.send(new ClientboundSoundPacket(SoundEvents.ARMOR_EQUIP_WOLF, SoundSource.PLAYERS,
+                        entity.position().x,
+                        entity.position().y,
+                        entity.position().z,
+                        2f,
+                        /* a pitch of 0 would not be nice so we up the base to 0.5 since
+                        nextFloat returns from 0.0 to 1.0 */
+                        randomPitch.nextFloat() * 0.5f,
+                        0
+                ));
+            } else if (message.typeof() == null) {
+                throw new RuntimeException("Malformed packet type received! Expected a typeof movement payload");
+            }
+        }
+        //TODO: Doesnt work like this but above by manually syncing it does?
+        //Because of how sound is synced, it needs to be OUTSIDE ifs that include checking if we are on the server (nvm lol)
+        //entity.playSound(SoundEvents.ARMOR_EQUIP_WOLF.value(), 2f,0.7f);
+
     }
 }
