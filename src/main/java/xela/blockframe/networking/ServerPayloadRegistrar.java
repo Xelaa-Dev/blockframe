@@ -1,4 +1,4 @@
-package xela.blockframe.network;
+package xela.blockframe.networking;
 
 
 ///The server payload register actually registers and defines what to do when a packet is inbound

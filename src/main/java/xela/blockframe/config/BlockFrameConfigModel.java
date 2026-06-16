@@ -17,4 +17,7 @@ public class BlockFrameConfigModel {
 
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     public float force_applied_on_movment = 0.2f;
+
+    @Sync(Option.SyncMode.INFORM_SERVER)
+    public boolean play_double_jump_sound = true;
 }
