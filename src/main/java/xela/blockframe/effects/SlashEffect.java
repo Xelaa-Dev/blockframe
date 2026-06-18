@@ -8,7 +8,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import xela.blockframe.data.DamageSources;
 
-///The <Code>Slash</Code>5 effect is like a knife cut, inflicts a random hurt to the player,
+///The <Code>Slash</Code> effect is like a knife cut, inflicts a random hurt to the player,
 /// doesnt scale damage but does scales the amount of time sit happens each second
 public class SlashEffect extends MobEffect {
 
@@ -40,9 +40,8 @@ public class SlashEffect extends MobEffect {
             DamageSource source =  new DamageSource(serverLevel.registryAccess()
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .get(DamageSources.SLASH_DAMAGE.identifier()).orElseThrow());
-            
-            entity.hurtServer(serverLevel, source, 0.5f);
 
+            entity.hurtServer(serverLevel, source, 0.5f);
             ticks_passed++;
         }
         if (ticks_passed > ticks_max){

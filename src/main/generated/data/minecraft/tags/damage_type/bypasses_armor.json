@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "blockframe:slash",
+      "required": false
+    },
+    {
+      "id": "blockframe:puncture",
+      "required": false
+    }
+  ]
+}

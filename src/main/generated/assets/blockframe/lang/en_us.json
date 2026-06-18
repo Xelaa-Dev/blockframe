@@ -6,6 +6,7 @@
   "key.blockframe.double_jump": "Double jump",
   "key.blockframe.roll": "Roll",
   "key.category.blockframe.blockframe": "Blockframe",
+  "key.category.blockframe.movement": "Movement",
   "text.config.Blockframe.option.chanche_for_status_effects_to_apply": "Chanche for status effects to apply",
   "text.config.Blockframe.option.force_applied_on_movment": "Force applied on special movements",
   "text.config.Blockframe.option.should_roll_for_status_effects_on_player_damaged": "Should roll for status effects on player damaged",

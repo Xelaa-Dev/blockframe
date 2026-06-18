@@ -3,7 +3,7 @@
   "package": "xela.blockframe.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "ExampleMixin"
+    "IgnoreFallDamageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
