@@ -7,6 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import xela.blockframe.data.DamageSources;
 
@@ -32,8 +33,8 @@ public class TagGen extends FabricTagsProvider<DamageType> {
     protected void addTags(HolderLookup.Provider registries) {
         DamageSources.init();
 
-        this.builder(DamageTypeTags.BYPASSES_ARMOR).addOptional(DamageSources.SLASH_DAMAGE);
+        this.builder(DamageTypeTags.BYPASSES_ARMOR).add(DamageSources.SLASH_DAMAGE);
 
-        this.builder(DamageTypeTags.BYPASSES_ARMOR).addOptional(DamageSources.PUNCTURE_DAMAGE);
+        //this.builder(DamageTypeTags.BYPASSES_ARMOR).add(DamageSources.PUNCTURE_DAMAGE);
     }
 }

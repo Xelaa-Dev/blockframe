@@ -16,6 +16,9 @@ public class EffectsRegistrar {
     public static final Holder<MobEffect> COLD = Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "cold"), new ColdEffect());
 
+    public static final Holder<MobEffect> PUNCTURE = Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
+            Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "puncture"), new PunctureEffect());
+
     //This will be used purely to get a random effect from the effect pool
     public static final List<Holder<MobEffect>> EFFECTS = List.of(SLASH,
                                                                 COLD);

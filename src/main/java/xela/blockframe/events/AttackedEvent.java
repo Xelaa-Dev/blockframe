@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import org.apache.logging.log4j.core.jmx.Server;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
 
@@ -15,10 +16,11 @@ import java.util.Random;
 
 public class AttackedEvent {
     public static void attackEventRegistrar() {
-        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::registerAttackedEvent);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickApplyRandomEffect);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckForPunctureEffectToBypassArmor);
     }
 
-    public static void registerAttackedEvent(LivingEntity entity, DamageSource source, float baseDamageTaken,
+    public static void TickApplyRandomEffect(LivingEntity entity, DamageSource source, float baseDamageTaken,
                                              float damageTaken, boolean blocked) {
         Random rand = new Random();
         //TODO: damage by type of mob?
@@ -34,5 +36,11 @@ public class AttackedEvent {
                         true));
             }
         }
+    }
+
+
+    public static void TickCheckForPunctureEffectToBypassArmor(LivingEntity entity, DamageSource source, float baseDamageTaken,
+                                                             float damageTaken, boolean blocked) {
+        
     }
 }
