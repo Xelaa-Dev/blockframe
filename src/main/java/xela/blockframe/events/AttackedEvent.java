@@ -17,7 +17,6 @@ import java.util.Random;
 public class AttackedEvent {
     public static void attackEventRegistrar() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickApplyRandomEffect);
-        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckForPunctureEffectToBypassArmor);
     }
 
     public static void TickApplyRandomEffect(LivingEntity entity, DamageSource source, float baseDamageTaken,
@@ -36,11 +35,5 @@ public class AttackedEvent {
                         true));
             }
         }
-    }
-
-
-    public static void TickCheckForPunctureEffectToBypassArmor(LivingEntity entity, DamageSource source, float baseDamageTaken,
-                                                             float damageTaken, boolean blocked) {
-        
     }
 }
