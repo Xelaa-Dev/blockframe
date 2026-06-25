@@ -12,8 +12,6 @@ import xela.blockframe.BlockFrame;
 
 import java.util.function.Function;
 
-//TODO: Add an item to "unlock" the tenno abilities
-//TODO: Also todo, ask DE if i can use the lotus flower logo
 public class RegisterItems {
 
     /*
