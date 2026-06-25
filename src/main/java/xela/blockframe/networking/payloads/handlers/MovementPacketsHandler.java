@@ -64,9 +64,5 @@ public class MovementPacketsHandler {
                 throw new RuntimeException("Malformed packet type received! Expected a typeof movement payload");
             }
         }
-        //TODO: Doesnt work like this but above by manually syncing it does?
-        //Because of how sound is synced, it needs to be OUTSIDE ifs that include checking if we are on the server (nvm lol)
-        //entity.playSound(SoundEvents.ARMOR_EQUIP_WOLF.value(), 2f,0.7f);
-
     }
 }
