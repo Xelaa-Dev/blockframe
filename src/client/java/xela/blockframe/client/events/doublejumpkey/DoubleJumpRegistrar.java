@@ -43,9 +43,7 @@ public class DoubleJumpRegistrar {
 
     //Yea i used claude for this i couldn't figure it out :(
     public static void registerDoubleJumpKeybind() {
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            processDoubleJumpTickLogic(client);
-        });
+        ClientTickEvents.END_CLIENT_TICK.register(DoubleJumpRegistrar::processDoubleJumpTickLogic);
     }
 
 

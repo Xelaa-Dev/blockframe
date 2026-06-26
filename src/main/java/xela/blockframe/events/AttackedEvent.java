@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
 
@@ -14,9 +15,10 @@ import java.util.Random;
 public class AttackedEvent {
     public static void attackEventRegistrar() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickApplyRandomEffect);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckTypeofDamage);
     }
 
-    public static void TickApplyRandomEffect(LivingEntity entity, DamageSource source, float baseDamageTaken,
+    private static void TickApplyRandomEffect(LivingEntity entity, DamageSource source, float baseDamageTaken,
                                              float damageTaken, boolean blocked) {
         Random rand = new Random();
         if (entity instanceof Player player && source.getEntity() instanceof Entity) {
@@ -30,5 +32,10 @@ public class AttackedEvent {
                         true));
             }
         }
+    }
+
+    private static void TickCheckTypeofDamage(Entity entity, DamageSource source, float baseDamageTaken,
+                                             float damageTaken, boolean blocked) {
+        BlockFrame.LOGGER.info(String.valueOf(source));
     }
 }
