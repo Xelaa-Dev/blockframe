@@ -1,4 +1,4 @@
-package xela.blockframe.client.events.rollkey;
+package xela.blockframe.client.events.roll;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -7,7 +7,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import xela.blockframe.client.BlockFrameClient;
-import xela.blockframe.client.events.doublejumpkey.DoubleJumpRegistrar;
+import xela.blockframe.client.events.doublejump.DoubleJumpRegistrar;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.MovementVectorPacket;
 

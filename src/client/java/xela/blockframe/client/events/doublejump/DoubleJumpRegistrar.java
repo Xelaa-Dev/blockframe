@@ -1,4 +1,4 @@
-package xela.blockframe.client.events.doublejumpkey;
+package xela.blockframe.client.events.doublejump;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

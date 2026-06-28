@@ -22,7 +22,5 @@ public class EffectsRegistrar {
     //This will be used purely to get a random effect from the effect pool
     public static final List<Holder<MobEffect>> EFFECTS = List.of(SLASH,
                                                                 COLD);
-    public static void init(){
-
-    }
+    public static void init(){}
 }
