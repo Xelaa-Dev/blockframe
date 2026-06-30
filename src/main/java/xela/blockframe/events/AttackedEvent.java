@@ -36,6 +36,12 @@ public class AttackedEvent {
 
     private static void TickCheckTypeofDamage(Entity entity, DamageSource source, float baseDamageTaken,
                                              float damageTaken, boolean blocked) {
-        BlockFrame.LOGGER.info(String.valueOf(source));
+        if (entity instanceof Player player && source.getEntity() instanceof Entity attacker) {
+            BlockFrame.LOGGER.info(String.valueOf(source.getEntity()));
+
+            source.getEntity().getName();
+            var type = attacker.getType();
+            BlockFrame.LOGGER.info(String.valueOf(source.getEntity().getType()));
+        }
     }
 }
