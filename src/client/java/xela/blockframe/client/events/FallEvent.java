@@ -1,7 +1,7 @@
 package xela.blockframe.client.events;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import xela.blockframe.client.events.doublejumpkey.DoubleJumpRegistrar;
+import xela.blockframe.client.events.doublejump.DoubleJumpRegistrar;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.GenericStringMessagePacket;
 

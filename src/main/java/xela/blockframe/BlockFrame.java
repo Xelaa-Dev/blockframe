@@ -21,7 +21,6 @@ public class BlockFrame implements ModInitializer {
 	public static final BlockFrameConfigWrapper CONFIG = BlockFrameConfigWrapper.createAndLoad();
 
 	public static boolean CALC_FALL_DAMAGE = true;
-	public static boolean MAKE_FALL_DAMAGE_RESET_FLAG = false;
 
 
 	@Override

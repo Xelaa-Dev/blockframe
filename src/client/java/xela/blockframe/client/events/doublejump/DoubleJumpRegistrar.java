@@ -1,4 +1,4 @@
-package xela.blockframe.client.events.doublejumpkey;
+package xela.blockframe.client.events.doublejump;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -43,9 +43,7 @@ public class DoubleJumpRegistrar {
 
     //Yea i used claude for this i couldn't figure it out :(
     public static void registerDoubleJumpKeybind() {
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            processDoubleJumpTickLogic(client);
-        });
+        ClientTickEvents.END_CLIENT_TICK.register(DoubleJumpRegistrar::processDoubleJumpTickLogic);
     }
 
 
