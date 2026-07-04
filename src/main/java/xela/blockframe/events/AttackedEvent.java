@@ -51,7 +51,7 @@ public class AttackedEvent {
             if (type.equals(EntityType.SKELETON) && !player.hasEffect(EffectsRegistrar.PUNCTURE)) {
                 player.addEffect(new MobEffectInstance(
                         EffectsRegistrar.PUNCTURE,
-                        10*20,
+                        5*20,
                         1,
                         true,
                         true,
