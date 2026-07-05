@@ -9,4 +9,6 @@ public class ImpactEffect extends MobEffect {
     protected ImpactEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
+
+
 }

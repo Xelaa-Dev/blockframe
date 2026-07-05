@@ -33,6 +33,9 @@ public class MovementPacketsHandler {
                 var effect = ((ServerPlayer) entity).getEffect(EffectsRegistrar.COLD);
                 var dampening = 1 - (effect.getAmplifier() * (Math.pow(10, -1)));
 
+                if (dampening < 0) {
+                    BlockFrame.LOGGER.warn("Dampening a negative integer!");
+                }
 
                 newVec3 = message.pushVector().multiply(dampening, dampening, dampening);
 
