@@ -12,12 +12,10 @@ import xela.blockframe.effects.EffectsRegistrar;
 
 @Mixin(Player.class)
 
-public class ApplyAmplifiedArmorDamageMixin {
-
+public abstract class ApplyAmplifiedArmorDamageMixin {
     @WrapOperation(method = "hurtArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;doHurtEquipment(Lnet/minecraft/world/damagesource/DamageSource;F[Lnet/minecraft/world/entity/EquipmentSlot;)V"))
     public void amplifyArmorHurt(Player instance, DamageSource damageSource, float v, EquipmentSlot[] equipmentSlots, Operation<Void> original) {
         if (instance.hasEffect(EffectsRegistrar.IMPACT)){
-            BlockFrame.LOGGER.info("armor damage double");
             v = v * 2;
             original.call(instance, damageSource, v, equipmentSlots);
         }

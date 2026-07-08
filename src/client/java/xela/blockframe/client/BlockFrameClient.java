@@ -14,7 +14,7 @@ import xela.blockframe.config.BlockFrameConfigWrapper;
 
 public class BlockFrameClient implements ClientModInitializer {
 	public static final BlockFrameConfigWrapper CONFIG = BlockFrame.CONFIG;
-	public static final boolean RENDER_COLD_HUD = true;
+	public static final boolean RENDER_COLD_HUD = false;
 	@Override
 	public void onInitializeClient() {
 		BlockFrame.LOGGER.info("Hello Fabric world!");
