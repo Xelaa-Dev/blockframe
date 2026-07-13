@@ -17,6 +17,8 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 public class AttackedEvent {
+
+    public static DamageSource lastAttack = null;
     public static void attackEventRegistrar() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckTypeofDamage);
     }
@@ -44,6 +46,7 @@ public class AttackedEvent {
      */
     private static void TickCheckTypeofDamage(Entity entity, DamageSource source, float baseDamageTaken,
                                              float damageTaken, boolean blocked) {
+        lastAttack = source;
         if (entity instanceof Player player && source.getEntity() instanceof Entity attacker) {
             var type = attacker.getType();
             //TODO: adapt as a switch statement

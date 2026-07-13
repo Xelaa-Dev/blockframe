@@ -4,15 +4,18 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import xela.blockframe.BlockFrame;
+import xela.blockframe.data.DamageSources;
 import xela.blockframe.data.DataAttachments;
 import xela.blockframe.data.typeof.DamageStackAttachment;
 import xela.blockframe.effects.stacking.StackingEffects;
+import xela.blockframe.events.AttackedEvent;
 
 ///The <Code>Cold</Code> effect should just slow down the player, nothing else
 public class ColdEffect extends MobEffect implements StackingEffects {
@@ -50,7 +53,7 @@ public class ColdEffect extends MobEffect implements StackingEffects {
     }
 
     @Override
-    public void AddDamageStack() {
+    public void AddDamageStack(DamageSource source) {
 
     }
 
@@ -72,8 +75,11 @@ public class ColdEffect extends MobEffect implements StackingEffects {
                     EffectsRegistrar.COLD));
         }else{
             stacks = player.getAttached(DataAttachments.DAMAGE_STACK);
+            if (AttackedEvent.lastAttack != null){
+                AddDamageStack(AttackedEvent.lastAttack);
+            }
         }
-        if (player.tickCount - stacks.lastTickApplied > 5){
+        if (stacks != null && player.tickCount - stacks.lastTickApplied > 5){
             BlockFrame.LOGGER.info("Eval");
         }
     }
