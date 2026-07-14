@@ -45,7 +45,7 @@ public class ColdEffect extends MobEffect implements StackingEffects {
     }
 
     private void onTick(ServerLevel serverLevel, ServerPlayer player, int amplification) {
-        if (ticks_passed > 20){
+        if (ticks_passed > 60){
             EvalDamageStacks(player);
         }else {
             ticks_passed++;
@@ -75,7 +75,7 @@ public class ColdEffect extends MobEffect implements StackingEffects {
                     EffectsRegistrar.COLD));
         }else{
             stacks = player.getAttached(DataAttachments.DAMAGE_STACK);
-            if (AttackedEvent.lastAttack != null){
+            if (AttackedEvent.lastAttack != null && ){
                 AddDamageStack(AttackedEvent.lastAttack);
             }
         }
