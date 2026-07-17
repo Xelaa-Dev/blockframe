@@ -57,7 +57,11 @@ public class AttackedEvent {
                         true,
                         true));
             }
+            //This should be always last, if the player has the effect we dont need to apply it again,
+            //but we try with t
+            else{
 
+            }
         }
     }
 }
