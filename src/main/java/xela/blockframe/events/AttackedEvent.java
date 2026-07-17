@@ -2,6 +2,7 @@ package xela.blockframe.events;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,6 +18,9 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 public class AttackedEvent {
+
+    public static DamageSource lastAttack = null;
+    public static int lastAttackTick = 0;
     public static void attackEventRegistrar() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckTypeofDamage);
     }
@@ -44,7 +48,10 @@ public class AttackedEvent {
      */
     private static void TickCheckTypeofDamage(Entity entity, DamageSource source, float baseDamageTaken,
                                              float damageTaken, boolean blocked) {
+        lastAttack = source;
+
         if (entity instanceof Player player && source.getEntity() instanceof Entity attacker) {
+            lastAttackTick =  player.tickCount;
             var type = attacker.getType();
             //TODO: adapt as a switch statement
 
@@ -64,4 +71,6 @@ public class AttackedEvent {
             }
         }
     }
+
+    public static boolean isHitRecent(Player player){}
 }
