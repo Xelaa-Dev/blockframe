@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
+import xela.blockframe.effects.stacking.StackHandler;
 
 import java.util.Random;
 import java.util.function.Predicate;
@@ -23,6 +24,7 @@ public class AttackedEvent {
     public static int lastAttackTick = 0;
     public static void attackEventRegistrar() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckTypeofDamage);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickEvalDamageStacks);
     }
 
     @Deprecated(since = "Mobs will each have its own damage type accordingly")
@@ -64,13 +66,13 @@ public class AttackedEvent {
                         true,
                         true));
             }
-            //This should be always last, if the player has the effect we dont need to apply it again,
-            //but we try with t
-            else{
-
-            }
         }
     }
 
-    public static boolean isHitRecent(Player player){}
+    private static void TickEvalDamageStacks(Entity entity, DamageSource source, float baseDamageTaken,
+                                             float damageTaken, boolean blocked){
+        if (entity instanceof Player player && source.getEntity() instanceof Entity attacker){
+            StackHandler.evalStack(player, source);
+        }
+    }
 }
