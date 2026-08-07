@@ -16,8 +16,8 @@ public class DamageSources {
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "puncture"));
 
     /*
-    Technically unneeded, a damage source is a way for thegame to tell to the client where damage originated(?) and
-    since the cold effect isn't strictly a damage but just a slowdown its not needed
+    Technically unneeded, a damage source is a way for the game to tell to the client where damage originated(?) and
+    since the cold effect isn't strictly a damage but just a slow down it's not needed
 
     public static final ResourceKey<DamageType> COLD_DAMAGE = ResourceKey.create(Registries.DAMAGE_TYPE,
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "cold"));

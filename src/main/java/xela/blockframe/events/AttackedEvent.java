@@ -72,5 +72,8 @@ public class AttackedEvent {
         }
     }
 
-    public static boolean isHitRecent(Player player){}
+    public static boolean isHitRecent(Player player){
+        //TODO: Add a way to detect if a hit has been recent and track it in time, for stacking damage bahviour
+        return false;
+    }
 }

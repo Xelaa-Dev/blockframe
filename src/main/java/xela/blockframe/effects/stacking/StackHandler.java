@@ -7,6 +7,10 @@ import xela.blockframe.data.typeof.DamageStackAttachment;
 import xela.blockframe.effects.EffectsRegistrar;
 
 public class StackHandler {
+    /*
+    Eval what to do, if the player has 0 stacks add one, if enough time has passed remove, if hes been hit again roll a
+    dice and add or remove the stack
+     */
     public static void evalStack(ServerPlayer player){
 
         DamageStackAttachment stacks = null;

@@ -1,6 +1,5 @@
 package xela.blockframe.effects;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -9,10 +8,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import xela.blockframe.BlockFrame;
-import xela.blockframe.data.DataAttachments;
-import xela.blockframe.data.typeof.DamageStackAttachment;
-import xela.blockframe.effects.stacking.StackingEffects;
 
 ///The <Code>Cold</Code> effect should just slow down the player, nothing else
 public class ColdEffect extends MobEffect{

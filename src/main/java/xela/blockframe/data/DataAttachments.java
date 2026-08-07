@@ -10,6 +10,9 @@ import xela.blockframe.data.typeof.DamageStackAttachment;
 
 
 public class DataAttachments {
+    /*
+    Damage stack attachment, should be init onto a player immediately basically and be set to 0
+     */
     public static final AttachmentType<DamageStackAttachment> DAMAGE_STACK = AttachmentRegistry.create(
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "damage_stack"), builder ->
             builder.initializer(
