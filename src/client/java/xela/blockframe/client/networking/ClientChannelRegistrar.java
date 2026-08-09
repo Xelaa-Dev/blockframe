@@ -11,10 +11,10 @@ public class ClientChannelRegistrar {
             BlockFrame.LOGGER.info("Client received: " + message.action());
             switch (message.action()){
                 case "DISABLE_RENDER":
-                    BlockFrameClient.RENDER_COLD_HUD = true;
+                    BlockFrameClient.RENDER_COLD_HUD = false;
                     break;
                 case "ENABLE_RENDER":
-                    BlockFrameClient.RENDER_COLD_HUD = false;
+                    BlockFrameClient.RENDER_COLD_HUD = true;
                     break;
             }
         });
