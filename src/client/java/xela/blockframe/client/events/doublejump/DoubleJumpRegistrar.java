@@ -113,10 +113,10 @@ public class DoubleJumpRegistrar {
                             finalPushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
                         }
                         var typeof = "DOUBLE_JUMP";
-                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,
+                        ChannelRegistrar.NET_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,
                                 client.player.getStringUUID(),typeof));
 
-                        ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
+                        ChannelRegistrar.NET_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
                                 "FALL_DAMAGE_DISABLE",client.player.getStringUUID() ));
 
                         fallingFromDoubleJump = true;

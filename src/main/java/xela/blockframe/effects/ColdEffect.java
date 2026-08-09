@@ -34,4 +34,5 @@ public class ColdEffect extends MobEffect{
             return super.applyEffectTick(serverLevel, entity, amplification);
         }
     }
+
 }

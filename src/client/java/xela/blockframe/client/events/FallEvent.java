@@ -13,7 +13,7 @@ public class FallEvent {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (DoubleJumpRegistrar.fallingFromDoubleJump && client.player.onGround()){
                 DoubleJumpRegistrar.fallingFromDoubleJump = false;
-                ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
+                ChannelRegistrar.NET_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
                         "FALL_DAMAGE_ENABLE",client.player.getStringUUID() ));
             }
         });

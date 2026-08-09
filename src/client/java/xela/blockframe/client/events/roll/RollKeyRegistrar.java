@@ -47,7 +47,7 @@ public class RollKeyRegistrar {
                     //Void the y movement
                     var finalPushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
                     var typeof = "ROLL";
-                    ChannelRegistrar.SERVERBOUND_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(),typeof));
+                    ChannelRegistrar.NET_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(),typeof));
 
                     ticksPassed = 0;
                     hasBeenPressed = false;
