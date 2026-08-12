@@ -22,6 +22,9 @@ public class StackHandler {
             /*
             TODO:for each effect check if we have a stack, if we dont apply the corresponding one
              */
+            if (player.getAttachedOrThrow(DamageStackAttachment)){
+
+            }
         }
 
         /*

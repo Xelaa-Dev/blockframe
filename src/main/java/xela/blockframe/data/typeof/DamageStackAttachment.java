@@ -20,6 +20,13 @@ public class DamageStackAttachment {
 
     public Holder<MobEffect> effect;
 
+    /*
+    (For future clarity and since as of this comment im not home for vacation(ì)
+    The stacks are what will define how "bad" the effect itself is
+    The last tick applied will help to define when the effect should decade and (so for example every 10 seconds 200 ticks
+    stacks = stacks -1
+    The effect is used to ident which effect has x stacks
+     */
     public static final Codec<DamageStackAttachment> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(Codec.INT.fieldOf("stacks").forGetter((DamageStackAttachment e) -> e.stacks),
                     Codec.INT.fieldOf("lastTickApplied").forGetter((DamageStackAttachment e) -> e.lastTickApplied),
