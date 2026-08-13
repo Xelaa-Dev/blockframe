@@ -20,7 +20,7 @@ import java.util.UUID;
 public class MovementPacketsHandler {
     public static Random randomPitch = new Random();
     public static void registerMovementPackets(){
-        ChannelRegistrar.SERVERBOUND_CHANNEL.registerServerbound(MovementVectorPacket.class, MovementPacketsHandler::handler);
+        ChannelRegistrar.NET_CHANNEL.registerServerbound(MovementVectorPacket.class, MovementPacketsHandler::handler);
     }
 
     private static void handler(MovementVectorPacket message, ServerAccess access) {
@@ -33,6 +33,9 @@ public class MovementPacketsHandler {
                 var effect = ((ServerPlayer) entity).getEffect(EffectsRegistrar.COLD);
                 var dampening = 1 - (effect.getAmplifier() * (Math.pow(10, -1)));
 
+                if (dampening < 0) {
+                    BlockFrame.LOGGER.warn("Dampening a negative integer!");
+                }
 
                 newVec3 = message.pushVector().multiply(dampening, dampening, dampening);
 

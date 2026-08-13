@@ -7,7 +7,7 @@ import xela.blockframe.networking.payloads.records.GenericStringMessagePacket;
 
 public class GenericStringMessagePacketsHandler {
     public static void registerGenericStringMessagePackets(){
-        ChannelRegistrar.SERVERBOUND_CHANNEL.registerServerbound(GenericStringMessagePacket.class, GenericStringMessagePacketsHandler::handler);
+        ChannelRegistrar.NET_CHANNEL.registerServerbound(GenericStringMessagePacket.class, GenericStringMessagePacketsHandler::handler);
     }
 
     private static void handler(GenericStringMessagePacket message, ServerAccess access) {
