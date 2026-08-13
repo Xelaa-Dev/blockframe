@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypeIds;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +39,7 @@ public class AttackedEvent {
             lastAttackTick = player.tickCount;
             EntityType<?> type = attacker.getType();
 
-            if (type.equals(EntityType.SKELETON)) {
+            if (type.equals(EntityTypeIds.SKELETON)) {
                 StackHandler.applyOrIncrementStack(player, EffectsRegistrar.PUNCTURE, 10);
             }
 
