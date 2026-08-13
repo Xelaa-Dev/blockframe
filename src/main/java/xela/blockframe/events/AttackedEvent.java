@@ -1,10 +1,12 @@
 package xela.blockframe.events;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,60 +21,34 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 public class AttackedEvent {
-
     public static DamageSource lastAttack = null;
     public static int lastAttackTick = 0;
+    private static final Random RAND = new Random();
     public static void attackEventRegistrar() {
-        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickCheckTypeofDamage);
-        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::TickEvalDamageStacks);
+    ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::tickCheckTypeofDamage);
     }
 
-    @Deprecated(since = "Mobs will each have its own damage type accordingly")
-    private static void TickApplyRandomEffect(LivingEntity entity, DamageSource source, float baseDamageTaken,
-                                             float damageTaken, boolean blocked) {
-        Random rand = new Random();
-        if (entity instanceof Player player && source.getEntity() instanceof Entity) {
-            if (Math.random() > (1 - BlockFrame.CONFIG.chanche_for_status_effects_to_apply()) && BlockFrame.CONFIG.should_roll_for_status_effects_on_player_damaged()){
-                player.addEffect(new MobEffectInstance(
-                        EffectsRegistrar.EFFECTS.get(rand.nextInt(EffectsRegistrar.EFFECTS.size())),
-                        10*20,
-                        1,
-                        true,
-                        true,
-                        true));
-            }
-        }
-    }
+    private static void tickCheckTypeofDamage(LivingEntity entity, DamageSource source, float baseDamageTaken,
+                                              float damageTaken, boolean blocked) {
+        if (entity.level().isClientSide()) return;
 
-    /*
-    Logically the first arrow that hits will not have a puncture effect. for now it will stay like this (see below)
-    TODO: predict the hit from a arrow
-     */
-    private static void TickCheckTypeofDamage(Entity entity, DamageSource source, float baseDamageTaken,
-                                             float damageTaken, boolean blocked) {
         lastAttack = source;
 
         if (entity instanceof Player player && source.getEntity() instanceof Entity attacker) {
-            lastAttackTick =  player.tickCount;
-            var type = attacker.getType();
-            //TODO: adapt as a switch statement
+            lastAttackTick = player.tickCount;
+            EntityType<?> type = attacker.getType();
 
-            if (type.equals(EntityType.SKELETON) && !player.hasEffect(EffectsRegistrar.PUNCTURE)) {
-                player.addEffect(new MobEffectInstance(
-                        EffectsRegistrar.PUNCTURE,
-                        5*20,
-                        1,
-                        true,
-                        true,
-                        true));
+            if (type.equals(EntityType.SKELETON)) {
+                StackHandler.applyOrIncrementStack(player, EffectsRegistrar.PUNCTURE, 10);
             }
-        }
-    }
 
-    private static void TickEvalDamageStacks(Entity entity, DamageSource source, float baseDamageTaken,
-                                             float damageTaken, boolean blocked){
-        if (entity instanceof Player player && source.getEntity() instanceof Entity attacker){
-            StackHandler.evalStack(player, source);
+            if (BlockFrame.CONFIG.should_roll_for_status_effects_on_player_damaged()) {
+                if (RAND.nextFloat() <= BlockFrame.CONFIG.chanche_for_status_effects_to_apply()) {
+                    Holder<MobEffect> randomEffect = EffectsRegistrar.EFFECTS.get(RAND.nextInt(EffectsRegistrar.EFFECTS.size()));
+
+                    StackHandler.applyOrIncrementStack(player, randomEffect, 10);
+                }
+            }
         }
     }
 }

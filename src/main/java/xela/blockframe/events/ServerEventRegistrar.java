@@ -6,5 +6,6 @@ public class ServerEventRegistrar {
         AttackEvent.registerAttackEvent();
         EffectFinishingEvent.registerEffectFinishingEvent();
         EffectFinishingEvent.registerEffectStartingEvent();
+        TickEvent.init();
     }
 }
