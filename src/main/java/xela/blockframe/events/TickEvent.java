@@ -20,47 +20,47 @@ public class TickEvent {
     }
 
     private static void TickRemoveDamageStack(MinecraftServer server) {
-        // Cicliamo su tutti i player connessi al server
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 
-            // Se il player non ha l'attachment degli stack, saltiamo subito
+            //If the player has nothing attached skip
             if (!player.hasAttached(DataAttachments.STATUS_ATTACHMENT)) continue;
 
+            //Get the attachment
             EntityStatusAttachment attachment = player.getAttached(DataAttachments.STATUS_ATTACHMENT);
-            if (attachment == null || attachment.getStatusMap().isEmpty()) continue;
 
+            //Get the current tick to track when to decay
             int currentTick = player.tickCount;
             Iterator<Map.Entry<Holder<MobEffect>, StatusData>> iterator = attachment.getStatusMap().entrySet().iterator();
 
+            //We get the iterator for the map and check if we have a next
             while (iterator.hasNext()) {
+                //get the next element
                 Map.Entry<Holder<MobEffect>, StatusData> entry = iterator.next();
                 Holder<MobEffect> effectHolder = entry.getKey();
                 StatusData data = entry.getValue();
 
-                // Se l'effetto non è più attivo sul player (es. bevuto il latte), puliamo la memoria
+                //if the player hasn't got that specific effect, we remove it from the list. This is a check for when
+                //the effect decades
                 if (!player.hasEffect(effectHolder)) {
                     iterator.remove();
                     continue;
                 }
 
-                // Verifichiamo se sono trascorsi DECAY_INTERVAL tick dall'ultimo stack
                 if (currentTick - data.getLastTickApplied() >= DECAY_INTERVAL) {
+                    //now we decay if we reach an arbitrary decay interval
                     int newStacks = data.getStacks() - 1;
 
                     if (newStacks <= 0) {
-                        // Finiti gli stack: rimuoviamo sia l'attachment che l'effetto nativo di Minecraft
                         iterator.remove();
                         player.removeEffect(effectHolder);
                     } else {
-                        // 1. Aggiorniamo il numero di stack e resettiamo il timer
                         data.setStacks(newStacks);
                         data.setLastTickApplied(currentTick);
 
-                        // 2. Scaliamo l'intensità dell'effetto (Amplifier = newStacks - 1)
                         player.addEffect(new MobEffectInstance(
                                 effectHolder,
-                                600,            // Durata fittizia
-                                newStacks - 1,  // Nuovo Amplifier (livello dell'effetto)
+                                600,
+                                newStacks - 1,
                                 false, true, true
                         ));
                     }

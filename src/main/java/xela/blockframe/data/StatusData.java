@@ -31,7 +31,6 @@ public class StatusData {
             ).apply(instance, StatusData::new)
     );
 
-    // STREAM CODEC per la rete
     public static final StreamCodec<RegistryFriendlyByteBuf, StatusData> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, StatusData::getStacks,
             ByteBufCodecs.VAR_INT, StatusData::getLastTickApplied,

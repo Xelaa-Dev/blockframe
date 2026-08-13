@@ -24,6 +24,7 @@ public class StackHandler {
         int currentTick = entity.tickCount;
         EntityStatusAttachment attachment = entity.getAttachedOrCreate(DataAttachments.STATUS_ATTACHMENT);
 
+        //THIS IS WHERE WE ACTUALLY UPDATE, WE GET THE DATA ATTACHMENT HANDLE FROM ABOVE AND UPDATE DIRECTLY
         attachment.addStack(effect, currentTick, maxStacks);
 
         StatusData data = attachment.getStatus(effect);

@@ -27,6 +27,7 @@ public class EntityStatusAttachment {
     }
 
     public void addStack(Holder<MobEffect> effect, int currentTick, int maxStacks) {
+        //The map is made from a key and value, the key will be the status effect
         StatusData data = statusMap.computeIfAbsent(effect, k -> new StatusData(0, currentTick));
         data.setStacks(Math.min(data.getStacks() + 1, maxStacks));
         data.setLastTickApplied(currentTick);
@@ -39,8 +40,6 @@ public class EntityStatusAttachment {
     public StatusData getStatus(Holder<MobEffect> effect) {
         return statusMap.get(effect);
     }
-
-    // --- STRUTTURA PER SERIALIZZAZIONE NBT/RETE PULITA ---
 
     public record Entry(Holder<MobEffect> effect, StatusData data) {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance ->
@@ -57,14 +56,12 @@ public class EntityStatusAttachment {
         );
     }
 
-    // Conversione da Mappa a Lista per il Codec
     private static List<Entry> toList(EntityStatusAttachment attachment) {
         List<Entry> list = new ArrayList<>();
         attachment.statusMap.forEach((effect, data) -> list.add(new Entry(effect, data)));
         return list;
     }
 
-    // Conversione da Lista a Mappa per il Codec
     private static EntityStatusAttachment fromList(List<Entry> list) {
         Map<Holder<MobEffect>, StatusData> map = new HashMap<>();
         for (Entry entry : list) {
@@ -73,11 +70,9 @@ public class EntityStatusAttachment {
         return new EntityStatusAttachment(map);
     }
 
-    // CODEC UFFICIALE (NBT)
     public static final Codec<EntityStatusAttachment> CODEC = Entry.CODEC.listOf()
             .xmap(EntityStatusAttachment::fromList, EntityStatusAttachment::toList);
 
-    // STREAM CODEC UFFICIALE (Rete/Networking)
     public static final StreamCodec<RegistryFriendlyByteBuf, EntityStatusAttachment> STREAM_CODEC =
             Entry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(EntityStatusAttachment::fromList, EntityStatusAttachment::toList);
 }
