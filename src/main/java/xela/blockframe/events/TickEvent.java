@@ -1,5 +1,6 @@
 package xela.blockframe.events;
 
+//Most of this code was ai generated and verified by me, i had the idea but couldnt wrap my head around it
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.Holder;
 import net.minecraft.server.MinecraftServer;

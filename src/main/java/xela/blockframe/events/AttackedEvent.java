@@ -21,6 +21,8 @@ import xela.blockframe.effects.stacking.StackHandler;
 import java.util.Random;
 import java.util.function.Predicate;
 
+//This event was made with the help of an ai but still i looked closely for problems
+//(its a concept that i originlly had in mind but couldn't make tyit into realis it myself
 public class AttackedEvent {
     public static DamageSource lastAttack = null;
     public static int lastAttackTick = 0;
@@ -38,6 +40,7 @@ public class AttackedEvent {
         if (entity instanceof Player player && source.getEntity() instanceof Entity attacker) {
             lastAttackTick = player.tickCount;
             EntityType<?> type = attacker.getType();
+
 
             if (type.equals(EntityTypeIds.SKELETON)) {
                 StackHandler.applyOrIncrementStack(player, EffectsRegistrar.PUNCTURE, 10);
