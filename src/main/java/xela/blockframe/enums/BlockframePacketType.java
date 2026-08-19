@@ -7,7 +7,7 @@ public enum BlockframePacketType {
 
     public final String name;
 
-    private BlockframePacketType(String name){
+    private BlockframePacketType(String name) {
         this.name = name;
     }
 

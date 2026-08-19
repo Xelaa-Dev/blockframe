@@ -34,11 +34,13 @@ public class DoubleJumpRegistrar {
     public static boolean fallingFromDoubleJump = false;
     private static boolean wasOnGround = true;
     private static int landingCooldown = 0;
+
     private enum JumpState {
         IDLE,
         FIRST_PRESS,
         MUST_RELEASE
     }
+
     private static JumpState jumpState = JumpState.IDLE;
 
     //Yea i used claude for this i couldn't figure it out :(
@@ -65,7 +67,7 @@ public class DoubleJumpRegistrar {
             if (justLanded) {
                 jumpState = JumpState.IDLE;
                 landingCooldown = 2;
-                while (DoubleJumpRegistrar.doubleJump.consumeClick());
+                while (DoubleJumpRegistrar.doubleJump.consumeClick()) ;
                 wasOnGround = true;
                 return;
             }
@@ -78,14 +80,16 @@ public class DoubleJumpRegistrar {
          */
             if (landingCooldown > 0) {
                 landingCooldown--;
-                while (DoubleJumpRegistrar.doubleJump.consumeClick());
+                while (DoubleJumpRegistrar.doubleJump.consumeClick()) ;
                 return;
             }
 
             boolean isInputDown = doubleJump.isDown();
 
             boolean hadClick = false;
-            while (doubleJump.consumeClick()) { hadClick = true; }
+            while (doubleJump.consumeClick()) {
+                hadClick = true;
+            }
 
             if (isOnGround) {
                 jumpState = JumpState.IDLE;
@@ -106,18 +110,18 @@ public class DoubleJumpRegistrar {
                 case MUST_RELEASE:
                     if (hadClick) {
                         Vec3 finalPushVector;
-                        if (client.player.getDeltaMovement().x == 0 && client.player.getDeltaMovement().z == 0){
+                        if (client.player.getDeltaMovement().x == 0 && client.player.getDeltaMovement().z == 0) {
                             finalPushVector = new Vec3(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
-                        }else{
+                        } else {
                             var pushVec = client.player.getLookAngle();
                             finalPushVector = pushVec.add(0, BlockFrameClient.CONFIG.force_applied_on_movment(), 0);
                         }
                         var typeof = "DOUBLE_JUMP";
                         ChannelRegistrar.NET_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector,
-                                client.player.getStringUUID(),typeof));
+                                client.player.getStringUUID(), typeof));
 
                         ChannelRegistrar.NET_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
-                                "FALL_DAMAGE_DISABLE",client.player.getStringUUID() ));
+                                "FALL_DAMAGE_DISABLE", client.player.getStringUUID()));
 
                         fallingFromDoubleJump = true;
                         jumpState = JumpState.IDLE;

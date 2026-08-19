@@ -5,7 +5,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
-///The <Code>Impact</Code> effect makes the armor damage double / triple and so on, leverages mixins
+/// The <Code>Impact</Code> effect makes the armor damage double / triple and so on, leverages mixins
 /// (refer to to do in <File>EffectsRegistrar</File>)
 public class ImpactEffect extends MobEffect {
     protected ImpactEffect() {

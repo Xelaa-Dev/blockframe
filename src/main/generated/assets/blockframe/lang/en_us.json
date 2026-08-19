@@ -1,5 +1,6 @@
 {
   "effect.blockframe.cold": "Cold",
+  "effect.blockframe.impact": "Impact",
   "effect.blockframe.puncture": "Puncture",
   "effect.blockframe.slash": "Slash",
   "enchantment.blockframe.bleed": "Slash",

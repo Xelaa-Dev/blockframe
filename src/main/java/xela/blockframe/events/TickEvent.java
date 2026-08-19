@@ -1,6 +1,7 @@
 package xela.blockframe.events;
 
 //Most of this code was ai generated and verified by me, i had the idea but couldnt wrap my head around it
+
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.Holder;
 import net.minecraft.server.MinecraftServer;
@@ -16,7 +17,8 @@ import java.util.Map;
 
 public class TickEvent {
     private static final int DECAY_INTERVAL = 100;
-    public static void init(){
+
+    public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(TickEvent::TickRemoveDamageStack);
     }
 

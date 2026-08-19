@@ -8,17 +8,17 @@ import net.minecraft.world.InteractionResult;
 Since i implemented books for enchantments, either i rethink how to do status effects or this remains to be deleted
  */
 public class AttackEvent {
-    public static void registerAttackEvent(){
+    public static void registerAttackEvent() {
         AttackEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
 
             //ALWAYS DO THIS! this should tick only on the server
-            if (!player.isSpectator() && level instanceof ServerLevel serverLevel){
+            if (!player.isSpectator() && level instanceof ServerLevel serverLevel) {
 
             }
 
             return InteractionResult.PASS;
         });
 
-        
+
     }
 }

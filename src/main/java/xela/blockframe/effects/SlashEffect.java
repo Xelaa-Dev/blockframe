@@ -8,12 +8,13 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import xela.blockframe.data.DamageSources;
 
-///The <Code>Slash</Code> effect is like a knife cut, inflicts a random hurt to the player,
+/// The <Code>Slash</Code> effect is like a knife cut, inflicts a random hurt to the player,
 /// doesnt scale damage but does scales the amount of time sit happens each second
 public class SlashEffect extends MobEffect {
 
     private static int ticks_passed = 0;
     private static int ticks_max = 0;
+
     protected SlashEffect() {
         //Super calls the parent class MobEffects, the first argument is the type of Category, the second is the color as a int
         super(MobEffectCategory.HARMFUL, 0xF4320B);
@@ -21,32 +22,32 @@ public class SlashEffect extends MobEffect {
 
     //Apply effect regardless
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier){
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplification) {
-        if (amplification == 1){
+        if (amplification == 1) {
             ticks_max = 60;
-        }else {
+        } else {
             ticks_max = Math.toIntExact(
                     Math.round(
                             (60 / Math.log10(amplification)) / 3.845)
             );
         }
 
-        if (entity instanceof LivingEntity && ticks_passed == 0){
-            DamageSource source =  new DamageSource(serverLevel.registryAccess()
+        if (entity instanceof LivingEntity && ticks_passed == 0) {
+            DamageSource source = new DamageSource(serverLevel.registryAccess()
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .get(DamageSources.SLASH_DAMAGE.identifier()).orElseThrow());
 
             entity.hurtServer(serverLevel, source, 0.5f);
             ticks_passed++;
         }
-        if (ticks_passed > ticks_max){
+        if (ticks_passed > ticks_max) {
             ticks_passed = 0;
-        }else {
+        } else {
             ticks_passed++;
         }
 

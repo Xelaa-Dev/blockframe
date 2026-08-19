@@ -2,24 +2,18 @@ package xela.blockframe.events;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypeIds;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.effects.stacking.StackHandler;
 
 import java.util.Random;
-import java.util.function.Predicate;
 
 //This event was made with the help of an ai but still i looked closely for problems
 //(its a concept that i originlly had in mind but couldn't make tyit into realis it myself
@@ -27,8 +21,9 @@ public class AttackedEvent {
     public static DamageSource lastAttack = null;
     public static int lastAttackTick = 0;
     private static final Random RAND = new Random();
+
     public static void attackEventRegistrar() {
-    ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::tickCheckTypeofDamage);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(AttackedEvent::tickCheckTypeofDamage);
     }
 
     private static void tickCheckTypeofDamage(LivingEntity entity, DamageSource source, float baseDamageTaken,

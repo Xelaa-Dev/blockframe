@@ -21,11 +21,13 @@ public class EffectsRegistrar {
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "puncture"), new PunctureEffect());
 
     public static final Holder<MobEffect> IMPACT = Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
-            Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID,"impact"), new ImpactEffect());
+            Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "impact"), new ImpactEffect());
 
 
     //This will be used purely to get a random effect from the effect pool
     public static final List<Holder<MobEffect>> EFFECTS = List.of(SLASH,
-                                                                COLD);
-    public static void init(){}
+            COLD);
+
+    public static void init() {
+    }
 }

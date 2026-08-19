@@ -9,7 +9,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.effect.MobEffect;
 import xela.blockframe.data.StatusData;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EntityStatusAttachment {
     private final Map<Holder<MobEffect>, StatusData> statusMap;
