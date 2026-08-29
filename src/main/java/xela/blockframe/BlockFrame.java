@@ -11,6 +11,7 @@ import xela.blockframe.events.AttackedEvent;
 import xela.blockframe.events.ServerEventRegistrar;
 import xela.blockframe.networking.ServerPayloadRegistrar;
 
+//this is a branch test hello 26.1 branch!
 public class BlockFrame implements ModInitializer {
 	public static final String MOD_ID = "blockframe";
 
