@@ -7,5 +7,6 @@ public class ServerEventRegistrar {
         EffectFinishingEvent.registerEffectFinishingEvent();
         EffectFinishingEvent.registerEffectStartingEvent();
         TickEvent.init();
+        DyingEvent.init();
     }
 }

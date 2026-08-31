@@ -16,14 +16,13 @@ public class DyingEvent {
     }
 
 
-    private static void onEntityDeath(ServerPlayer player, ServerPlayer serverPlayer1, boolean b) {
+    private static void onEntityDeath(ServerPlayer before, ServerPlayer after, boolean b) {
 
-            if (EffectFinishingEvent.effectRendererMap.containsKey(player.getUUID()) &&
-                    EffectFinishingEvent.effectRendererMap.get(player.getUUID())) {
-
-                BlockFrame.LOGGER.info("Forcing render disable for " + player.getName().getString());
-                ChannelRegistrar.NET_CHANNEL.serverHandle(player).
+            if (EffectFinishingEvent.effectRendererMap.containsKey(after.getUUID())) {
+                BlockFrame.LOGGER.info("Forcing render disable for " + after.getName().getString());
+                ChannelRegistrar.NET_CHANNEL.serverHandle(after).
                         send(new EffectEndPayload("COLD", "DISABLE_RENDER"));
+                EffectFinishingEvent.effectRendererMap.remove(after.getUUID());
             }
     }
 
