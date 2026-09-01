@@ -28,12 +28,15 @@ public class SlashEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplification) {
+
+        //Since applyEffectTick would apply hurt every tick we manually delay
         if (amplification == 1) {
             ticks_max = 60;
         } else {
+            //No idea wtf i wrote
             ticks_max = Math.toIntExact(
                     Math.round(
-                            (60 / Math.log10(amplification)) / 3.845)
+                            (120 / Math.log10(amplification)) / 3.845)
             );
         }
 
@@ -42,8 +45,7 @@ public class SlashEffect extends MobEffect {
                     .lookupOrThrow(Registries.DAMAGE_TYPE)
                     .get(DamageSources.SLASH_DAMAGE.identifier()).orElseThrow());
 
-            entity.hurtServer(serverLevel, source, 0.5f);
-            ticks_passed++;
+            entity.hurtServer(serverLevel, source, 0.1f * amplification);
         }
         if (ticks_passed > ticks_max) {
             ticks_passed = 0;
