@@ -5,7 +5,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
-///The <Code>Puncture</Code> effect should bypass all armor and go to the main health pool.
+/// The <Code>Puncture</Code> effect should bypass all armor and go to the main health pool.
 /// We basically need 0 code, we could have made it a simple data attachment to the player
 /// but for the sake of knowing whats hurting us we need to set it as a effect
 /// TODO: I have to do a custom ui anyways, move these effects to there?

@@ -23,7 +23,7 @@ public class DamageSources {
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "cold"));
      */
 
-    public static void init(){
+    public static void init() {
         //init all static variables in file
     }
 

@@ -15,7 +15,7 @@ import xela.blockframe.effects.EffectsRegistrar;
 
 public record BleedEnchantmentEffect(LevelBasedValue amount) implements EnchantmentEntityEffect {
 
-    public static final MapCodec<BleedEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec( instance ->
+    public static final MapCodec<BleedEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     LevelBasedValue.CODEC.fieldOf("amount").forGetter(BleedEnchantmentEffect::amount)
             ).apply(instance, BleedEnchantmentEffect::new)
@@ -23,12 +23,12 @@ public record BleedEnchantmentEffect(LevelBasedValue amount) implements Enchantm
 
     @Override
     public void apply(ServerLevel serverLevel, int enchantmentLevel, EnchantedItemInUse item, Entity entity, Vec3 position) {
-        if(entity instanceof LivingEntity target){
-            if (item.owner() != null && item.owner() instanceof Player player){
+        if (entity instanceof LivingEntity target) {
+            if (item.owner() != null && item.owner() instanceof Player player) {
                 target.addEffect(new MobEffectInstance(
                         EffectsRegistrar.SLASH
-                        ,10*20
-                        ,(int) this.amount.calculate(enchantmentLevel),
+                        , 10 * 20
+                        , (int) this.amount.calculate(enchantmentLevel),
                         true,
                         true,
                         true));

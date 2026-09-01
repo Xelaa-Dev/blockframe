@@ -11,31 +11,32 @@ import xela.blockframe.events.AttackedEvent;
 import xela.blockframe.events.ServerEventRegistrar;
 import xela.blockframe.networking.ServerPayloadRegistrar;
 
+//This is a git test hello branch 26.2!
 public class BlockFrame implements ModInitializer {
-	public static final String MOD_ID = "blockframe";
+    public static final String MOD_ID = "blockframe";
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static final BlockFrameConfigWrapper CONFIG = BlockFrameConfigWrapper.createAndLoad();
+    // This logger is used to write text to the console and the log file.
+    // It is considered best practice to use your mod id as the logger's name.
+    // That way, it's clear which mod wrote info, warnings, and errors.
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final BlockFrameConfigWrapper CONFIG = BlockFrameConfigWrapper.createAndLoad();
 
-	public static boolean CALC_FALL_DAMAGE = true;
+    public static boolean CALC_FALL_DAMAGE = true;
 
 
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+    @Override
+    public void onInitialize() {
+        // This code runs as soon as Minecraft is in a mod-load-ready state.
+        // However, some things (like resources) may still be uninitialized.
+        // Proceed with mild caution.
 
-		BlockFrame.LOGGER.info(":3");
-		//RegisterItems.init();
-		//Registrar order is important here, first Client then Server since the Client part registers packets
-		ServerPayloadRegistrar.init();
-		ServerEventRegistrar.init();
-		EffectsRegistrar.init();
-		AttackedEvent.attackEventRegistrar();
-		EnchantmentRegistrar.init();
-	}
+        BlockFrame.LOGGER.info(":3");
+        //RegisterItems.init();
+        //Registrar order is important here, first Client then Server since the Client part registers packets
+        ServerPayloadRegistrar.init();
+        ServerEventRegistrar.init();
+        EffectsRegistrar.init();
+        AttackedEvent.attackEventRegistrar();
+        EnchantmentRegistrar.init();
+    }
 }

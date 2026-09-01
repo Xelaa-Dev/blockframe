@@ -8,13 +8,13 @@ import xela.blockframe.BlockFrame;
 
 @Mixin(LivingEntity.class)
 public abstract class IgnoreFallDamageMixin {
-	@ModifyReturnValue(method = "calculateFallDamage", at = @At(value = "TAIL"))
-	private int ignoreFallDamage(int original) {
-		if (!BlockFrame.CALC_FALL_DAMAGE){
-			return 0;
-		}else{
-			return original;
-		}
-	}
+    @ModifyReturnValue(method = "calculateFallDamage", at = @At(value = "TAIL"))
+    private int ignoreFallDamage(int original) {
+        if (!BlockFrame.CALC_FALL_DAMAGE) {
+            return 0;
+        } else {
+            return original;
+        }
+    }
 }
 

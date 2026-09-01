@@ -19,7 +19,8 @@ import java.util.UUID;
 
 public class MovementPacketsHandler {
     public static Random randomPitch = new Random();
-    public static void registerMovementPackets(){
+
+    public static void registerMovementPackets() {
         ChannelRegistrar.NET_CHANNEL.registerServerbound(MovementVectorPacket.class, MovementPacketsHandler::handler);
     }
 

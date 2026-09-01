@@ -28,30 +28,30 @@ public class RollKeyRegistrar {
     private static int ticksPassed = 0;
     private static boolean hasBeenPressed = false;
 
-    public static void registerRollKeybind(){
-        ClientTickEvents.END_CLIENT_TICK.register(client ->{
+    public static void registerRollKeybind() {
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
             processRollTickLogic(client);
         });
     }
 
     private static void processRollTickLogic(Minecraft client) {
         ticksPassed++;
-        if (landingCooldown > 0){
-            while(Roll.consumeClick());
+        if (landingCooldown > 0) {
+            while (Roll.consumeClick()) ;
             landingCooldown = landingCooldown - 1;
-        }else if ( landingCooldown <= 0){
+        } else if (landingCooldown <= 0) {
             while (Roll.consumeClick()) {
                 if (hasBeenPressed && ticksPassed < 15 && client.player != null) {
                     landingCooldown = 20;
                     var pushVec = client.player.getLookAngle();
                     //Void the y movement
-                    var finalPushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0,-pushVec.y,0);
+                    var finalPushVector = pushVec.add(BlockFrameClient.CONFIG.force_applied_on_movment()).add(0, -pushVec.y, 0);
                     var typeof = "ROLL";
-                    ChannelRegistrar.NET_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(),typeof));
+                    ChannelRegistrar.NET_CHANNEL.clientHandle().send(new MovementVectorPacket(finalPushVector, client.player.getStringUUID(), typeof));
 
                     ticksPassed = 0;
                     hasBeenPressed = false;
-                }else {
+                } else {
                     ticksPassed = 0;
                     hasBeenPressed = true;
                     return;

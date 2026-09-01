@@ -21,12 +21,12 @@ public abstract class ApplyDirectDamageMixin {
     @WrapOperation(method = "getDamageAfterArmorAbsorb", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/damagesource/" +
             "DamageSource;is(Lnet/minecraft/tags/TagKey;)Z"))
     private boolean getDamageAfterArmorAbsorb(DamageSource instance, TagKey<DamageType> tag, Operation<Boolean> original) {
-        if(this.asLivingEntity() instanceof Player player && instance.getEntity() instanceof LivingEntity target){
-            if (player.hasEffect(EffectsRegistrar.PUNCTURE)){
+        if (this.asLivingEntity() instanceof Player player && instance.getEntity() instanceof LivingEntity target) {
+            if (player.hasEffect(EffectsRegistrar.PUNCTURE)) {
                 //BlockFrame.LOGGER.info("Mixin bypasss " + instance.getEntity());
                 return true;
-            }else {
-                return original.call(instance,tag);
+            } else {
+                return original.call(instance, tag);
             }
         }
         return false;
