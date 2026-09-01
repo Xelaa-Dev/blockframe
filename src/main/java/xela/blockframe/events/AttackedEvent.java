@@ -10,7 +10,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntityTypeIds;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +20,8 @@ import xela.blockframe.effects.stacking.StackHandler;
 import java.util.Random;
 import java.util.function.Predicate;
 
+//This event was made with the help of an ai but still i looked closely for problems
+//(its a concept that i originlly had in mind but couldn't make tyit into realis it myself
 public class AttackedEvent {
     public static DamageSource lastAttack = null;
     public static int lastAttackTick = 0;
@@ -39,7 +40,8 @@ public class AttackedEvent {
             lastAttackTick = player.tickCount;
             EntityType<?> type = attacker.getType();
 
-            if (type.equals(EntityTypeIds.SKELETON)) {
+
+            if (type.equals(EntityType.SKELETON)) {
                 StackHandler.applyOrIncrementStack(player, EffectsRegistrar.PUNCTURE, 10);
             }
 

@@ -1,11 +1,16 @@
 package xela.blockframe.events;
 
+//Most of this code was ai generated and verified by me, i had the idea but couldnt wrap my head around it
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.Holder;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.block.NoteBlock;
 import xela.blockframe.data.DataAttachments;
 import xela.blockframe.data.StatusData;
 import xela.blockframe.data.typeof.EntityStatusAttachment;
@@ -56,6 +61,18 @@ public class TickEvent {
                     } else {
                         data.setStacks(newStacks);
                         data.setLastTickApplied(currentTick);
+
+                        //Remove the effect and add it back with the new stack since minecraft doesn't do that for us
+                        player.removeEffect(effectHolder);
+
+                        player.connection.send(new ClientboundSoundPacket(SoundEvents.UI_BUTTON_CLICK, SoundSource.PLAYERS,
+                                player.position().x,
+                                player.position().y,
+                                player.position().z,
+                                2f,
+                                7f,
+                                0
+                                ));
 
                         player.addEffect(new MobEffectInstance(
                                 effectHolder,
