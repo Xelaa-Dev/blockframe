@@ -12,6 +12,7 @@ repositories {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+    /*
     exclusiveContent {
         forRepository {
             maven {
@@ -21,6 +22,7 @@ repositories {
         }
         filter { includeGroupAndSubgroups('com.geckolib') }
     }
+    */
     maven { url 'https://maven.wispforest.io/releases/' }
 
     // since owo 0.13.0, jitpack is required for kdl4j
@@ -55,7 +57,7 @@ dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     //Geckolib
-    implementation "com.geckolib:geckolib-fabric-${minecraft_version}:${geckolibVersion}"
+    //implementation "com.geckolib:geckolib-fabric-${minecraft_version}:${geckolibVersion}"
 
     //OWOlib stuff
     implementation "io.wispforest:owo-lib:${project.owo_version}"
