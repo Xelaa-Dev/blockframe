@@ -42,9 +42,11 @@ public class AttackedEvent {
             switch (type){
                 case "minecraft:zombie" -> {
                     StackHandler.applyOrIncrementStack(player, EffectsRegistrar.IMPACT, 10);
+                    return;
                 }
                 case "minecraft:skeleton" -> {
                     StackHandler.applyOrIncrementStack(player, EffectsRegistrar.PUNCTURE, 10);
+                    return;
                 }
             }
 
