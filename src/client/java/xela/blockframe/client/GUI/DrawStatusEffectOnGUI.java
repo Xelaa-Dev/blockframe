@@ -4,36 +4,27 @@ import io.wispforest.owo.ui.base.BaseOwoScreen;
 import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.UIContainers;
-import io.wispforest.owo.ui.core.HorizontalAlignment;
-import io.wispforest.owo.ui.core.OwoUIAdapter;
-import io.wispforest.owo.ui.core.Surface;
-import io.wispforest.owo.ui.core.VerticalAlignment;
+import io.wispforest.owo.ui.core.*;
+import io.wispforest.owo.ui.hud.Hud;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.Containers;
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
+import xela.blockframe.BlockFrame;
 
 
 public class DrawStatusEffectOnGUI extends BaseOwoScreen<FlowLayout> {
 
     @Override
     protected @NotNull OwoUIAdapter<FlowLayout> createAdapter() {
-
-        return OwoUIAdapter.create(this, UIContainers::horizontalFlow);
+        BlockFrame.LOGGER.warn("adapter");
+        return OwoUIAdapter.create(this, UIContainers::verticalFlow);
     }
 
     @Override
     protected void build(FlowLayout rootComponent) {
-        rootComponent
-                .surface(Surface.VANILLA_TRANSLUCENT)
-                .horizontalAlignment(HorizontalAlignment.CENTER)
-                .verticalAlignment(VerticalAlignment.CENTER);
+        BlockFrame.LOGGER.warn("build");
 
-        rootComponent.child(
-                UIComponents.button(
-                        Component.literal("A Button"),
-                        button -> {
-                            System.out.println("click");
-                        }
-                )
-        );
     }
 }
