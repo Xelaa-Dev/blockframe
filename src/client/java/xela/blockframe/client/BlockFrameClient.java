@@ -1,5 +1,6 @@
 package xela.blockframe.client;
 
+import io.wispforest.owo.renderdoc.RenderdocScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
@@ -8,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.GUI.DrawColdEffect;
+import xela.blockframe.client.GUI.DrawStatusEffectOnGUI;
 import xela.blockframe.client.events.FallEvent;
 import xela.blockframe.client.events.KeyHandler;
 import xela.blockframe.client.networking.ClientChannelRegistrar;
@@ -20,6 +22,7 @@ public class BlockFrameClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		BlockFrame.LOGGER.info("Hello Fabric world!");
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "before_chat"), DrawColdEffect::extract);
+		Minecraft.getInstance().setScreen(new DrawStatusEffectOnGUI());
 
 		KeyHandler.init();
 		FallEvent.init();
