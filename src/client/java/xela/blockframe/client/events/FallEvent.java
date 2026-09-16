@@ -1,6 +1,8 @@
 package xela.blockframe.client.events;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.client.events.doublejump.DoubleJumpRegistrar;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.GenericStringMessagePacket;
@@ -16,6 +18,9 @@ public class FallEvent {
                 ChannelRegistrar.NET_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
                         "FALL_DAMAGE_ENABLE",client.player.getStringUUID() ));
             }
+        });
+        ClientPlayConnectionEvents.JOIN.register((listener, sender, client) -> {
+            BlockFrameClient.HUD_READY = true;
         });
     }
 }
