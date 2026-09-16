@@ -47,7 +47,7 @@ public class BlockFrameClient implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register( client -> {
 			if (client.isGameLoadFinished() && HUD_READY && !HUD_RENDERED){
-				clientInstance.setScreen(new DrawStatusEffectOnHUD());
+				clientInstance.setScreenAndShow(new DrawStatusEffectOnHUD());
 				HUD_RENDERED = true;
 			}
 		});
