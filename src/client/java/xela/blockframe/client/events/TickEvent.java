@@ -1,26 +1,24 @@
 package xela.blockframe.client.events;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import xela.blockframe.client.BlockFrameClient;
-import xela.blockframe.client.events.doublejump.DoubleJumpRegistrar;
+import net.minecraft.client.Minecraft;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.GenericStringMessagePacket;
 
-public class FallEvent {
+public class TickEvent {
     public static void init() {
-        /*
-        This is needed to reset the server-side mixin that voids the fall damage
-         */
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+        ClientTickEvents.END_CLIENT_TICK.register(TickEvent::TickCheckForFallDamage);
+    }
+
+    private static void TickCheckForFallDamage(Minecraft client) {
+
             if (DoubleJumpRegistrar.fallingFromDoubleJump && client.player.onGround()) {
                 DoubleJumpRegistrar.fallingFromDoubleJump = false;
                 ChannelRegistrar.NET_CHANNEL.clientHandle().send(new GenericStringMessagePacket(
                         "FALL_DAMAGE_ENABLE", client.player.getStringUUID()));
             }
-        });
-        ClientPlayConnectionEvents.JOIN.register((listener, sender, client) -> {
-            BlockFrameClient.HUD_READY = true;
-        });
+
     }
+
+
 }

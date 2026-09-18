@@ -1,5 +1,6 @@
 package xela.blockframe.client.networking;
 
+import io.wispforest.owo.ui.hud.Hud;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.networking.ChannelRegistrar;
@@ -15,6 +16,15 @@ public class ClientChannelRegistrar {
                 case "ENABLE_RENDER":
                     BlockFrameClient.RENDER_COLD_HUD = true;
                     break;
+            }
+        });
+
+        ChannelRegistrar.NET_CHANNEL.registerClientbound(xela.blockframe.networking.payloads.records.HudUpdatePayload.class, (message, access) -> {
+            var component = Hud.getComponent(message.ID());
+            if (component == null){
+                BlockFrame.LOGGER.warn("component is null");
+            }else{
+                component.toString();
             }
         });
     }

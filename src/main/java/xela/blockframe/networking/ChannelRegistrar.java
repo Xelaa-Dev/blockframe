@@ -6,7 +6,7 @@ import xela.blockframe.networking.payloads.handlers.GenericStringMessagePacketsH
 import xela.blockframe.networking.payloads.handlers.MovementPacketsHandler;
 
 public class ChannelRegistrar {
-    public static final OwoNetChannel NET_CHANNEL = OwoNetChannel.create(Identifier.fromNamespaceAndPath("blockframe", "main_serverbound"));
+    public static final OwoNetChannel NET_CHANNEL = OwoNetChannel.create(Identifier.fromNamespaceAndPath("blockframe", "main"));
 
 
     public static void init() {
