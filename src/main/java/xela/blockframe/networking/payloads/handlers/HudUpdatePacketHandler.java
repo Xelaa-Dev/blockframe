@@ -8,7 +8,7 @@ import xela.blockframe.networking.payloads.records.HudUpdatePayload;
 
 public class HudUpdatePacketHandler {
     public static void registerHudUpdatePacketHandler(Player player, BlockframePacketType operation, int amount) {
-        ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new HudUpdatePayload(Identifier.fromNamespaceAndPath("blockframe", "ui_test")
+        ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new HudUpdatePayload(Identifier.fromNamespaceAndPath("blockframe", "ui")
         ,operation, amount));
     }
 }

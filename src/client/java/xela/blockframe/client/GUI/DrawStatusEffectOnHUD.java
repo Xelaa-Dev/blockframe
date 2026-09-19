@@ -13,24 +13,31 @@ import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import xela.blockframe.BlockFrame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DrawStatusEffectOnHUD {
 
+    private static final List<Identifier> ids = new ArrayList<>(){
+        {
+            add(Identifier.fromNamespaceAndPath("blockframe", "ui"));
+            add(Identifier.fromNamespaceAndPath("blockframe", "ui_test"));
+        }
+    };
 
     public static void init() {
         BlockFrame.LOGGER.warn("build");
         var id = Identifier.fromNamespaceAndPath("blockframe", "ui_test");
 
         Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
-                UIComponents.label(Component.empty().append("0")).positioning(Positioning.relative(100,100)).id(String.valueOf(id)));
+                UIComponents.label(Component.empty().append("0")).positioning(Positioning.relative(38,65)).id(String.valueOf(id)));
 
-        /*
-        var component = Hud.getComponent(id);
-
-        if (component == null){
-            BlockFrame.LOGGER.warn("component is null");
-        }
-         */
+        Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
+                UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
+                        .child(
+                                UIComponents.label(Component.empty().append("1")).positioning(Positioning.relative(38,65)).
+                                        id(String.valueOf(id))));
     }
 
        /*
@@ -47,4 +54,19 @@ public class DrawStatusEffectOnHUD {
                         .positioning(Positioning.relative(100, 100))
         );
         */
+}
+enum UI_COMPONENTS {
+    //These are supposed to identify the UI components for effects, the actual number is gonna be the using the
+    // identifier + "_value" id style
+    COLD(Identifier.fromNamespaceAndPath("blockframe", "ui_COLD")),
+    IMPACT(Identifier.fromNamespaceAndPath("blockframe", "ui_IMPACT")),
+    PUNCTURE(Identifier.fromNamespaceAndPath("blockframe", "ui_PUNCTURE")),
+    SLASH(Identifier.fromNamespaceAndPath("blockframe", "ui_SLASH"));
+
+
+    public final Identifier name;
+
+    private UI_COMPONENTS(Identifier name) {
+        this.name = name;
+    }
 }
