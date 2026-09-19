@@ -28,16 +28,16 @@ public class DrawStatusEffectOnHUD {
 
     public static void init() {
         BlockFrame.LOGGER.warn("build");
-        var id = Identifier.fromNamespaceAndPath("blockframe", "ui_test");
-
-        Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
-                UIComponents.label(Component.empty().append("0")).positioning(Positioning.relative(38,65)).id(String.valueOf(id)));
 
         Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
                 UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                         .child(
-                                UIComponents.label(Component.empty().append("1")).positioning(Positioning.relative(38,65)).
-                                        id(String.valueOf(id))));
+                                UIComponents.label(Component.empty().append("testing1")).
+                                        id(String.valueOf(UI_COMPONENTS.COLD.name)))
+                        .child(
+                                UIComponents.label(Component.empty().append("testing2")).
+                                        id(String.valueOf(UI_COMPONENTS.SLASH.name)))
+                        .positioning(Positioning.relative(50, 70)));
     }
 
        /*
@@ -58,10 +58,10 @@ public class DrawStatusEffectOnHUD {
 enum UI_COMPONENTS {
     //These are supposed to identify the UI components for effects, the actual number is gonna be the using the
     // identifier + "_value" id style
-    COLD(Identifier.fromNamespaceAndPath("blockframe", "ui_COLD")),
-    IMPACT(Identifier.fromNamespaceAndPath("blockframe", "ui_IMPACT")),
-    PUNCTURE(Identifier.fromNamespaceAndPath("blockframe", "ui_PUNCTURE")),
-    SLASH(Identifier.fromNamespaceAndPath("blockframe", "ui_SLASH"));
+    COLD(Identifier.fromNamespaceAndPath("blockframe", "ui_cold")),
+    IMPACT(Identifier.fromNamespaceAndPath("blockframe", "ui_impact")),
+    PUNCTURE(Identifier.fromNamespaceAndPath("blockframe", "ui_puncture")),
+    SLASH(Identifier.fromNamespaceAndPath("blockframe", "ui_slash"));
 
 
     public final Identifier name;
