@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import xela.blockframe.BlockFrame;
+import xela.blockframe.enums.UiComponentsEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,11 @@ public class DrawStatusEffectOnHUD {
         Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
                 UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                         .child(
-                                UIComponents.label(Component.empty().append("testing1")).
-                                        id(String.valueOf(UI_COMPONENTS.COLD.name)))
+                                UIComponents.label(Component.empty().append("testing1   ")).
+                                        id(String.valueOf(UiComponentsEnum.COLD.name)))
                         .child(
-                                UIComponents.label(Component.empty().append("testing2")).
-                                        id(String.valueOf(UI_COMPONENTS.SLASH.name)))
+                                UIComponents.label(Component.empty().append("testing2   ")).
+                                        id(String.valueOf(UiComponentsEnum.SLASH.name)))
                         .positioning(Positioning.relative(50, 70)));
     }
 
@@ -54,19 +55,4 @@ public class DrawStatusEffectOnHUD {
                         .positioning(Positioning.relative(100, 100))
         );
         */
-}
-enum UI_COMPONENTS {
-    //These are supposed to identify the UI components for effects, the actual number is gonna be the using the
-    // identifier + "_value" id style
-    COLD(Identifier.fromNamespaceAndPath("blockframe", "ui_cold")),
-    IMPACT(Identifier.fromNamespaceAndPath("blockframe", "ui_impact")),
-    PUNCTURE(Identifier.fromNamespaceAndPath("blockframe", "ui_puncture")),
-    SLASH(Identifier.fromNamespaceAndPath("blockframe", "ui_slash"));
-
-
-    public final Identifier name;
-
-    private UI_COMPONENTS(Identifier name) {
-        this.name = name;
-    }
 }

@@ -10,6 +10,10 @@ import xela.blockframe.client.BlockFrameClient;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.HudUpdatePayload;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ClientChannelRegistrar {
     public static void init() {
         ChannelRegistrar.NET_CHANNEL.registerClientbound(xela.blockframe.networking.payloads.records.EffectEndPayload.class, (message, access) -> {
@@ -30,6 +34,8 @@ public class ClientChannelRegistrar {
     }
 
     private static void refreshUi(HudUpdatePayload message) {
+        List<LabelComponent> castedLabelsList = new ArrayList<>();
+
         var component = Hud.getComponent(message.ID());
         if (component == null){
             BlockFrame.LOGGER.warn("component is null");
@@ -38,8 +44,15 @@ public class ClientChannelRegistrar {
             var castedComponent = (FlowLayout) component;
 
             for (var child :  castedComponent.children()) {
-
+                if (child instanceof LabelComponent) {
+                    castedLabelsList.add((LabelComponent) child);
+                }
             }
+
+            var labelComponent = castedLabelsList.stream().filter( x -> x.id() == message.ID().toString()).
+                    toList();
+            BlockFrame.LOGGER.info("LabelComponent: " + labelComponent);
+
             /*
             var original = Integer.parseInt(castedComponent.text().getString());
             switch (message.operation()) {

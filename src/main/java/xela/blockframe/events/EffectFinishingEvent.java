@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
 import net.minecraft.world.entity.player.Player;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.enums.BlockframePacketType;
+import xela.blockframe.enums.UiComponentsEnum;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.handlers.HudUpdatePacketHandler;
 import xela.blockframe.networking.payloads.records.EffectEndPayload;
@@ -27,8 +28,9 @@ public class EffectFinishingEvent {
                 //FROM the server to the client
                 ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new EffectEndPayload("COLD", "DISABLE_RENDER"));
                 effectRendererMap.put(player.getUUID(), false);
+                HudUpdatePacketHandler.registerHudUpdatePacketHandler(player, BlockframePacketType.HUD_DECREASE_STACK, -1, UiComponentsEnum.COLD.name);
             }
-            HudUpdatePacketHandler.registerHudUpdatePacketHandler(player, BlockframePacketType.HUD_DECREASE_STACK, -1);
+
         });
     }
 
@@ -39,8 +41,8 @@ public class EffectFinishingEvent {
                 //FROM the server to the client
                 ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new EffectEndPayload("COLD", "ENABLE_RENDER"));
                 effectRendererMap.put(player.getUUID(), true);
+                HudUpdatePacketHandler.registerHudUpdatePacketHandler(player, BlockframePacketType.HUD_INCREMENT_STACK, 1, UiComponentsEnum.COLD.name);
             }
-            HudUpdatePacketHandler.registerHudUpdatePacketHandler(player, BlockframePacketType.HUD_INCREMENT_STACK, 1);
         });
     }
 }
