@@ -1,4 +1,4 @@
-package xela.blockframe.client.GUI;
+package xela.blockframe.client.HUD;
 
 import com.jcraft.jorbis.Block;
 import io.wispforest.owo.braid.widgets.label.Label;

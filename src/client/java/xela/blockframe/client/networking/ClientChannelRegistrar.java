@@ -7,11 +7,13 @@ import net.minecraft.client.ComponentCollector;
 import net.minecraft.network.chat.Component;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
+import xela.blockframe.enums.UiComponentsEnum;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.HudUpdatePayload;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ClientChannelRegistrar {
@@ -36,7 +38,7 @@ public class ClientChannelRegistrar {
     private static void refreshUi(HudUpdatePayload message) {
         List<LabelComponent> castedLabelsList = new ArrayList<>();
 
-        var component = Hud.getComponent(message.ID());
+        var component = Hud.getComponent(UiComponentsEnum.MAIN.name);
         if (component == null){
             BlockFrame.LOGGER.warn("component is null");
         }else {
@@ -49,8 +51,12 @@ public class ClientChannelRegistrar {
                 }
             }
 
-            var labelComponent = castedLabelsList.stream().filter( x -> x.id() == message.ID().toString()).
-                    toList();
+            var labelComponent = castedLabelsList.stream().filter( x -> Objects.equals(x.id(), message.ID().toString())).toList();
+            BlockFrame.LOGGER.info("text:" + labelComponent.getFirst().text().getString());
+            labelComponent.get(0).text(Component.empty().append(
+                    labelComponent.getFirst().text().getString() + message.amount())
+            );
+
             BlockFrame.LOGGER.info("LabelComponent: " + labelComponent);
 
             /*
