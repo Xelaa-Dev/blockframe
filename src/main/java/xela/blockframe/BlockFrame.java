@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xela.blockframe.config.BlockFrameConfigWrapper;
+import xela.blockframe.data.DataAttachments;
 import xela.blockframe.effects.EffectsRegistrar;
 import xela.blockframe.enchantment.EnchantmentRegistrar;
 import xela.blockframe.events.AttackedEvent;
@@ -34,6 +35,7 @@ public class BlockFrame implements ModInitializer {
 		//RegisterItems.init();
 		//Registrar order is important here, first Client then Server since the Client part registers packets
 		ServerPayloadRegistrar.init();
+		DataAttachments.register();
 		ServerEventRegistrar.init();
 		EffectsRegistrar.init();
 		AttackedEvent.attackEventRegistrar();
