@@ -1,16 +1,11 @@
-package xela.blockframe.client.GUI;
+package xela.blockframe.client.HUD;
 
-import com.jcraft.jorbis.Block;
-import io.wispforest.owo.braid.widgets.label.Label;
-import io.wispforest.owo.ui.base.BaseOwoScreen;
 import io.wispforest.owo.ui.component.UIComponents;
-import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.hud.Hud;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import org.jetbrains.annotations.NotNull;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.enums.UiComponentsEnum;
 
