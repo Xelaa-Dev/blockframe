@@ -1,4 +1,4 @@
-package xela.blockframe.client.GUI;
+package xela.blockframe.client.HUD;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
