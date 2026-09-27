@@ -15,6 +15,12 @@ import net.minecraft.world.level.block.NoteBlock;
 import xela.blockframe.data.DataAttachments;
 import xela.blockframe.data.StatusData;
 import xela.blockframe.data.typeof.EntityStatusAttachment;
+import xela.blockframe.effects.EffectsRegistrar;
+import xela.blockframe.enums.BlockframePacketType;
+import xela.blockframe.enums.UiComponentsEnum;
+import xela.blockframe.networking.ChannelRegistrar;
+import xela.blockframe.networking.payloads.handlers.HudUpdatePacketHandler;
+import xela.blockframe.networking.payloads.records.EffectEndPayload;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -47,7 +53,7 @@ public class TickEvent {
                 StatusData data = entry.getValue();
 
                 //if the player hasn't got that specific effect, we remove it from the list. This is a check for when
-                //the effect decades
+                //the effect decades naturally or we do it with the mod
                 if (!player.hasEffect(effectHolder)) {
                     iterator.remove();
                     continue;
@@ -60,11 +66,29 @@ public class TickEvent {
                     if (newStacks <= 0) {
                         iterator.remove();
                         player.removeEffect(effectHolder);
+                        MobEffectInstance instance = new MobEffectInstance(effectHolder);
+                        if (instance.is(EffectsRegistrar.COLD)){
+                            ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new EffectEndPayload("COLD", "DISABLE_RENDER"));
+                            EffectFinishingEvent.effectRendererMap.put(player.getUUID(), false);
+                            HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
+                                    UiComponentsEnum.COLD.name);
+                        }
+                        if (instance.is(EffectsRegistrar.SLASH)){
+                            HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
+                                    UiComponentsEnum.SLASH.name);
+                        }
+
                     } else {
                         data.setStacks(newStacks);
                         data.setLastTickApplied(currentTick);
 
+                        //SInce we need to do all of this magic dancing around effects bc minecraft doesn't inherently
+                        // have this effect mechanic, I need to manually tell the handler of updating the HUD to not do
+                        // anything, else when we decrease we also increase and the - 1 gets canceled
+                        EffectFinishingEvent.suppressNextHudIncrement(player);
+
                         //Remove the effect and add it back with the new stack since minecraft doesn't do that for us
+
                         player.removeEffect(effectHolder);
 
                         player.connection.send(new ClientboundSoundPacket(SoundEvents.UI_BUTTON_CLICK, SoundSource.PLAYERS,
@@ -76,12 +100,25 @@ public class TickEvent {
                                 0
                                 ));
 
-                        player.addEffect(new MobEffectInstance(
+                        MobEffectInstance effect = new MobEffectInstance(
                                 effectHolder,
                                 600,
                                 newStacks - 1,
                                 false, true, true
-                        ));
+                        ) ;
+                        player.addEffect(effect);
+
+                        //Send a packet to update the clientside hud, we can't rely on the ServerMobEffectEvents.BEFORE_REMOVE
+                        //since minecraft doesn't track when an effect "decays"
+                        if (effect.is(EffectsRegistrar.COLD)){
+                            HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
+                                    UiComponentsEnum.COLD.name);
+                        }
+                        if (effect.is(EffectsRegistrar.SLASH)){
+                            HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
+                                    UiComponentsEnum.SLASH.name);
+                        }
+
                     }
                 }
             }

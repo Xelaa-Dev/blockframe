@@ -3,16 +3,16 @@ package xela.blockframe.client.networking;
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.hud.Hud;
-import net.minecraft.client.ComponentCollector;
 import net.minecraft.network.chat.Component;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.client.BlockFrameClient;
+import xela.blockframe.enums.UiComponentsEnum;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.HudUpdatePayload;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class ClientChannelRegistrar {
     public static void init() {
@@ -29,16 +29,16 @@ public class ClientChannelRegistrar {
         });
 
         ChannelRegistrar.NET_CHANNEL.registerClientbound(xela.blockframe.networking.payloads.records.HudUpdatePayload.class, (message, access) -> {
-            refreshUi(message);
+            refreshHUD(message);
         });
     }
 
-    private static void refreshUi(HudUpdatePayload message) {
+    private static void refreshHUD(HudUpdatePayload message) {
         List<LabelComponent> castedLabelsList = new ArrayList<>();
 
-        var component = Hud.getComponent(message.ID());
+        var component = Hud.getComponent(UiComponentsEnum.MAIN.name);
         if (component == null){
-            BlockFrame.LOGGER.warn("component is null");
+            BlockFrame.LOGGER.warn("HUD component is null!");
         }else {
             //Cast to label
             var castedComponent = (FlowLayout) component;
@@ -49,21 +49,24 @@ public class ClientChannelRegistrar {
                 }
             }
 
-            var labelComponent = castedLabelsList.stream().filter( x -> x.id() == message.ID().toString()).
-                    toList();
-            BlockFrame.LOGGER.info("LabelComponent: " + labelComponent);
+            var labelComponent = castedLabelsList.stream().filter( x ->
+                    Objects.equals(x.id(), message.ID().toString())).toList().getFirst();
+            String[] splittedArray = labelComponent.text().getString().split("\\s");
 
-            /*
-            var original = Integer.parseInt(castedComponent.text().getString());
             switch (message.operation()) {
                 case HUD_DECREASE_STACK:
-                    castedComponent.text(Component.empty().append(String.valueOf(original - 1)));
+                    labelComponent.text(Component.empty());
+                    labelComponent.text(Component.empty().append(splittedArray[0] +
+                            " " + (Integer.parseInt(splittedArray[1]) - 1)));
+
                     break;
                 case HUD_INCREMENT_STACK:
-                    castedComponent.text(Component.empty().append(String.valueOf(original + 1)));
+                    labelComponent.text(Component.empty());
+                    labelComponent.text(Component.empty().append(splittedArray[0] +
+                            " " + (Integer.parseInt(splittedArray[1]) + 1)));
                     break;
             }
-            */
+
         }
     }
 }
