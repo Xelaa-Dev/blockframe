@@ -28,20 +28,24 @@ public class DrawStatusEffectOnHUD {
     };
 
     public static void init() {
-        BlockFrame.LOGGER.warn("build");
+        BlockFrame.LOGGER.debug("Rebuilding HUD");
 
         Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
                 UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                         .child(
-                                UIComponents.label(Component.empty().append("testing1   ")).
+                                UIComponents.label(Component.empty().append("Cold 0 ")).
+                                        color(Color.BLUE).
                                         id(String.valueOf(UiComponentsEnum.COLD.name)))
                         .child(
-                                UIComponents.label(Component.empty().append("testing2   ")).
+                                UIComponents.label(Component.empty().append("Slash 0")).
+                                        color(Color.RED).
                                         id(String.valueOf(UiComponentsEnum.SLASH.name)))
                         .positioning(Positioning.relative(50, 70)));
     }
+}
 
-       /*
+//Just for future reference
+/*
         Hud.add(Identifier.fromNamespaceAndPath("blockframe", "ui"), () ->
                 UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                         .child(UIComponents.label(
@@ -55,4 +59,3 @@ public class DrawStatusEffectOnHUD {
                         .positioning(Positioning.relative(100, 100))
         );
         */
-}
