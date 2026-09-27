@@ -9,9 +9,7 @@ public enum UiComponentsEnum {
     COLD(Identifier.fromNamespaceAndPath("blockframe", "ui_cold")),
     IMPACT(Identifier.fromNamespaceAndPath("blockframe", "ui_impact")),
     PUNCTURE(Identifier.fromNamespaceAndPath("blockframe", "ui_puncture")),
-    SLASH(Identifier.fromNamespaceAndPath("blockframe", "ui_slash")),
-    MAIN(Identifier.fromNamespaceAndPath("blockframe", "ui"));
-
+    SLASH(Identifier.fromNamespaceAndPath("blockframe", "ui_slash"));
 
     public final Identifier name;
 
