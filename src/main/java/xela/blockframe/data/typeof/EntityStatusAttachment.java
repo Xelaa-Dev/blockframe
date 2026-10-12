@@ -11,7 +11,9 @@ import xela.blockframe.data.StatusData;
 
 import java.util.*;
 
+
 public class EntityStatusAttachment {
+    //This map is used per player, each player will have its own map attached to himself
     private final Map<Holder<MobEffect>, StatusData> statusMap;
 
     public EntityStatusAttachment() {
