@@ -9,16 +9,7 @@ import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.handlers.HudUpdatePacketHandler;
 import xela.blockframe.networking.payloads.records.EffectEndPayload;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-/*
-TODO:Used the disk data setup to write to disk when the renderer is enabled, by logic if th eplayer dies
-    and the data says his renderer is still on then we need to send a packet on death to disable it
-*/
+import java.util.*;
 
 public class EffectFinishingEvent {
     public static Map<UUID, Boolean> effectRendererMap = new HashMap<>();
@@ -50,7 +41,11 @@ public class EffectFinishingEvent {
             var player = (Player) entity;
             boolean skipHudIncrement = suppressNextHudIncrement.remove(player.getUUID());
             if (!skipHudIncrement) {
-                if (effectInstance.is(EffectsRegistrar.COLD)) {
+              /*
+TODO:Used the disk data setup to write to disk when the renderer is enabled, by logic if th eplayer dies
+    and the data says his renderer is still on then we need to send a packet on death to disable it
+*/
+  if (effectInstance.is(EffectsRegistrar.COLD)) {
                     //FROM the server to the client
                     ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new EffectEndPayload("COLD", "ENABLE_RENDER"));
                     effectRendererMap.put(player.getUUID(), true);

@@ -11,7 +11,6 @@ import xela.blockframe.data.typeof.EntityStatusAttachment;
 public class StackHandler {
     static int tickDecadeTime = 600;
 
-    //TODO:effect stacks but doesnt decrease correctly
     public static void applyOrIncrementStack(LivingEntity entity, Holder<MobEffect> effect, int maxStacks) {
         if (entity.level().isClientSide()) return;
 
