@@ -39,10 +39,14 @@ public class DrawStatusEffectOnHUD {
                                         color(Color.BLUE).
                                         id(String.valueOf(UiComponentsEnum.COLD.name)))
                         .child(
-                                UIComponents.label(Component.empty().append("Slash 0")).
+                                UIComponents.label(Component.empty().append("Slash 0 ")).
                                         color(Color.RED).
                                         id(String.valueOf(UiComponentsEnum.SLASH.name)))
-                        .positioning(Positioning.relative(50, 70)));
+                        .child(
+                                UIComponents.label(Component.empty().append("Impact 0")).
+                                        color(Color.GREEN).
+                                        id(String.valueOf(UiComponentsEnum.IMPACT.name)))
+                        .positioning(Positioning.relative(50, 83)));
     }
 }
 

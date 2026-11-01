@@ -16,7 +16,7 @@ public abstract class ApplyAmplifiedArmorDamageMixin {
     @WrapOperation(method = "hurtArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;doHurtEquipment(Lnet/minecraft/world/damagesource/DamageSource;F[Lnet/minecraft/world/entity/EquipmentSlot;)V"))
     public void amplifyArmorHurt(Player instance, DamageSource damageSource, float v, EquipmentSlot[] equipmentSlots, Operation<Void> original) {
         if (instance.hasEffect(EffectsRegistrar.IMPACT)){
-            v = v * 2;
+            v = (float) (v * (instance.getEffect(EffectsRegistrar.IMPACT).getAmplifier() / 0.5));
             original.call(instance, damageSource, v, equipmentSlots);
         }
     }
