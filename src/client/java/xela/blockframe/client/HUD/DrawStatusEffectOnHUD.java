@@ -2,7 +2,9 @@ package xela.blockframe.client.HUD;
 
 import io.wispforest.owo.ui.component.UIComponents;
 import io.wispforest.owo.ui.container.UIContainers;
-import io.wispforest.owo.ui.core.*;
+import io.wispforest.owo.ui.core.Color;
+import io.wispforest.owo.ui.core.Positioning;
+import io.wispforest.owo.ui.core.Sizing;
 import io.wispforest.owo.ui.hud.Hud;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -32,10 +34,14 @@ public class DrawStatusEffectOnHUD {
                                         color(Color.BLUE).
                                         id(String.valueOf(UiComponentsEnum.COLD.name)))
                         .child(
-                                UIComponents.label(Component.empty().append("Slash 0")).
+                                UIComponents.label(Component.empty().append("Slash 0 ")).
                                         color(Color.RED).
                                         id(String.valueOf(UiComponentsEnum.SLASH.name)))
-                        .positioning(Positioning.relative(50, 70)));
+                        .child(
+                                UIComponents.label(Component.empty().append("Impact 0")).
+                                        color(Color.GREEN).
+                                        id(String.valueOf(UiComponentsEnum.IMPACT.name)))
+                        .positioning(Positioning.relative(50, 83)));
     }
 }
 

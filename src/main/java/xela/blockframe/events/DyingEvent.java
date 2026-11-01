@@ -1,11 +1,7 @@
 package xela.blockframe.events;
 
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
 import xela.blockframe.BlockFrame;
 import xela.blockframe.networking.ChannelRegistrar;
 import xela.blockframe.networking.payloads.records.EffectEndPayload;

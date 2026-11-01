@@ -26,7 +26,7 @@ public class MovementPacketsHandler {
 
     private static void handler(MovementVectorPacket message, ServerAccess access) {
         Vec3 newVec3;
-        Entity entity = access.player().level().getEntity(UUID.fromString(message.UUID()));
+        Entity entity = access.player().level().getEntity(access.player().getUUID());
 
         if (entity instanceof ServerPlayer && !entity.level().isClientSide()) {
 

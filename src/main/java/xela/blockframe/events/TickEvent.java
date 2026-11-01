@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.level.block.NoteBlock;
 import xela.blockframe.data.DataAttachments;
 import xela.blockframe.data.StatusData;
 import xela.blockframe.data.typeof.EntityStatusAttachment;
@@ -32,11 +31,15 @@ public class TickEvent {
         ServerTickEvents.END_SERVER_TICK.register(TickEvent::TickRemoveDamageStack);
     }
 
+    //TODO: Convert this so that a player is tracked on damage not to track all players
+    // Damaged event triggers -> add player to a list -> run that map in the for below
     private static void TickRemoveDamageStack(MinecraftServer server) {
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 
-            //If the player has nothing attached skip
-            if (!player.hasAttached(DataAttachments.STATUS_ATTACHMENT)) continue;
+            //If the player has nothing attached skip the player
+            if (!player.hasAttached(DataAttachments.STATUS_ATTACHMENT)){
+                continue;
+            }
 
             //Get the attachment
             EntityStatusAttachment attachment = player.getAttached(DataAttachments.STATUS_ATTACHMENT);
@@ -76,6 +79,10 @@ public class TickEvent {
                         if (instance.is(EffectsRegistrar.SLASH)){
                             HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
                                     UiComponentsEnum.SLASH.name);
+                        }
+                        if (instance.is(EffectsRegistrar.IMPACT)){
+                            HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
+                                    UiComponentsEnum.IMPACT.name);
                         }
 
                     } else {
