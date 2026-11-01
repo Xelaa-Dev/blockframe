@@ -42,10 +42,10 @@ public class EffectFinishingEvent {
             boolean skipHudIncrement = suppressNextHudIncrement.remove(player.getUUID());
             if (!skipHudIncrement) {
               /*
-TODO:Used the disk data setup to write to disk when the renderer is enabled, by logic if th eplayer dies
-    and the data says his renderer is still on then we need to send a packet on death to disable it
-*/
-  if (effectInstance.is(EffectsRegistrar.COLD)) {
+                TODO:Used the disk data setup to write to disk when the renderer is enabled, by logic if th eplayer dies
+                    and the data says his renderer is still on then we need to send a packet on death to disable it
+                */
+                if (effectInstance.is(EffectsRegistrar.COLD)) {
                     //FROM the server to the client
                     ChannelRegistrar.NET_CHANNEL.serverHandle(player).send(new EffectEndPayload("COLD", "ENABLE_RENDER"));
                     effectRendererMap.put(player.getUUID(), true);
@@ -54,6 +54,9 @@ TODO:Used the disk data setup to write to disk when the renderer is enabled, by 
                 }
                 if (effectInstance.is(EffectsRegistrar.SLASH)) {
                     HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_INCREMENT_STACK, 1, UiComponentsEnum.SLASH.name);
+                }
+                if (effectInstance.is(EffectsRegistrar.IMPACT)) {
+                    HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_INCREMENT_STACK, 1, UiComponentsEnum.IMPACT.name);
                 }
             }
 

@@ -78,6 +78,10 @@ public class TickEvent {
                             HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
                                     UiComponentsEnum.SLASH.name);
                         }
+                        if (instance.is(EffectsRegistrar.IMPACT)){
+                            HudUpdatePacketHandler.send(player, BlockframePacketType.HUD_DECREASE_STACK, 1,
+                                    UiComponentsEnum.IMPACT.name);
+                        }
 
                     } else {
                         data.setStacks(newStacks);
