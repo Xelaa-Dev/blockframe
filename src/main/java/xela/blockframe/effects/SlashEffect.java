@@ -12,8 +12,8 @@ import xela.blockframe.data.DamageSources;
 /// doesnt scale damage but does scales the amount of time sit happens each second
 public class SlashEffect extends MobEffect {
 
-    private static int ticks_passed = 0;
-    private static int ticks_max = 0;
+    private int ticks_passed = 0;
+    private int ticks_max = 0;
 
     protected SlashEffect() {
         //Super calls the parent class MobEffects, the first argument is the type of Category, the second is the color as a int

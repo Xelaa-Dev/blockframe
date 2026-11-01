@@ -8,8 +8,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class TranslationsGen extends FabricLanguageProvider {
 
-    public TranslationsGen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
-        super(dataOutput, "en_us", registryLookup);
+    public TranslationsGen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup){
+        super(dataOutput,"en_us",registryLookup);
     }
 
     @Override
@@ -28,6 +28,7 @@ public class TranslationsGen extends FabricLanguageProvider {
         translationBuilder.add("effect.blockframe.cold", "Cold");
         translationBuilder.add("effect.blockframe.puncture", "Puncture");
         translationBuilder.add("effect.blockframe.impact", "Impact");
+
 
          /*
         MOD SPECIFIC (MOD MENU VIA OWOLIB)
