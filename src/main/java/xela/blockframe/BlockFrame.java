@@ -22,7 +22,7 @@ public class BlockFrame implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final BlockFrameConfigWrapper CONFIG = BlockFrameConfigWrapper.createAndLoad();
 
-	public static boolean CALC_FALL_DAMAGE = true;
+	public boolean CALC_FALL_DAMAGE = true;
 
 
 	@Override

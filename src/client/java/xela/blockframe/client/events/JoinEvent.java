@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import xela.blockframe.client.HUD.DrawStatusEffectOnHUD;
 import xela.blockframe.enums.UiComponentsEnum;
 
 public class JoinEvent {
