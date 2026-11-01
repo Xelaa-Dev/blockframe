@@ -9,7 +9,6 @@ import xela.blockframe.BlockFrame;
 
 import java.util.List;
 
-//TODO:Implement effect stacking
 public class EffectsRegistrar {
     public static final Holder<MobEffect> SLASH = Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
             Identifier.fromNamespaceAndPath(BlockFrame.MOD_ID, "slash"), new SlashEffect());

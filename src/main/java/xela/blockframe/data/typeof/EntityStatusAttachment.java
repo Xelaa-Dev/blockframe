@@ -14,7 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class EntityStatusAttachment {
+    //This map is used per player, each player will have its own map attached to himself
     private final Map<Holder<MobEffect>, StatusData> statusMap;
 
     public EntityStatusAttachment() {
