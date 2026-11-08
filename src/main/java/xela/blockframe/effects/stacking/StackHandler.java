@@ -5,8 +5,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import xela.blockframe.data.DataAttachments;
-import xela.blockframe.data.StatusData;
-import xela.blockframe.data.typeof.EntityStatusAttachment;
+import xela.blockframe.statusEngine.StatusData;
+import xela.blockframe.statusEngine.EntityStatusAttachment;
 
 public class StackHandler {
     static int tickDecadeTime = 600;

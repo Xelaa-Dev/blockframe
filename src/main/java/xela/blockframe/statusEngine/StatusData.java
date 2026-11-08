@@ -1,4 +1,4 @@
-package xela.blockframe.data;
+package xela.blockframe.statusEngine;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.resources.Identifier;
 import xela.blockframe.BlockFrame;
-import xela.blockframe.data.typeof.EntityStatusAttachment;
+import xela.blockframe.statusEngine.EntityStatusAttachment;
 import xela.blockframe.data.typeof.FallDamageDisableStatusAttachment;
 
 
