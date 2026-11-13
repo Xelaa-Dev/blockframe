@@ -1,4 +1,4 @@
-package xela.blockframe.data.typeof;
+package xela.blockframe.statusEngine;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -7,7 +7,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.effect.MobEffect;
-import xela.blockframe.data.StatusData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
